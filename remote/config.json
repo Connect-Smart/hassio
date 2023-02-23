@@ -1,0 +1,20 @@
+{
+  "name": "Remote Connect-Smart",
+  "version": "1.0.0",
+  "slug": "remote",
+  "description": "Create tunnel to remote controlled server",
+  "url": "https://github.com/Connect-Smart/hassio/remote",
+  "arch": ["armv7", "armhf", "amd64", "aarch64", "i386"],
+  "startup": "system",
+  "init": false,
+  "boot": "auto",
+  "host_network": true,
+  "options": {
+    "username": "10001",
+    "privkey": ""
+  },
+  "schema": {
+    "username": "str",
+    "privkey": "str"
+  }
+}
