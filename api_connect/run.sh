@@ -14,7 +14,7 @@ NEW_VALUE="0"
 # Instellingen
 HA_HOST="http://localhost:8123"  # Vervang dit door het adres van jouw Home Assistant
 
-curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
+curl -s -X POST -H "Authorization: Bearer $HA_TOKEN" \
      -H "Content-Type: application/json" \
      -d "{
        \"state\": \"29\",
@@ -29,7 +29,7 @@ perform_api_request() {
     REMOTE_DATA=$(curl "$REMOTE_API_URL")
 
     # API-aanroep om de entiteit bij te werken
-    curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
+    curl -s -X POST -H "Authorization: Bearer $HA_TOKEN" \
         -H "Content-Type: application/json" \
         -d "{\"state\": \"$REMOTE_DATA\"}" \
         "$HA_HOST/api/states/$ENTITY_ID"
