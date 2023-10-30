@@ -24,20 +24,12 @@ ENTITY_CONFIG='{
 }'
 
 # Controleer of de entiteit al bestaat
-EXISTING_ENTITY=$(curl -s -H "Authorization: Bearer $HA_TOKEN" \
-   "$HA_HOST/api/states/sensor.example_sensor")
-        echo "Entiteit $EXISTING_ENTITY"
-
-if [ "$EXISTING_ENTITY" == "Entity not found" ]; then
   # De entiteit bestaat nog niet, voeg deze toe
   curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
        -H "Content-Type: application/json" \
        -d "$ENTITY_CONFIG" \
        "$HA_HOST/api/config/config_entries/entry_id/options"
   echo "Nieuwe entiteit toegevoegd aan Home Assistant configuratie"
-else
-  echo "De entiteit bestaat al, geen actie vereist"
-fi
 
 
 perform_api_request() {
