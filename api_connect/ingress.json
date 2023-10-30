@@ -1,0 +1,11 @@
+{
+    "themeColor": "auto",
+    "panel": "true",
+    "title": "Connect-Smart Pagina",
+    "webPath": "/local/cs_panel",
+    "config": {
+      "source": "http://add-on-container:80",
+      "ingress_url": "/local/cs_panel"
+    }
+  }
+  
