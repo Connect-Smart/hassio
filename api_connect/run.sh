@@ -1,18 +1,16 @@
 #!/bin/bash
+set -e
 
-# Inclusie van Bashio-configuratie
-source /config/bashio/config.json
+# Vervang 'your_entity_id' door de gewenste entiteit-id en 'your_value' door de gewenste waarde.
+ENTITY_ID="your_entity_id"
+NEW_VALUE="your_value"
 
-# Haal de toegangstoken op uit Bashio
-TOKEN=$(bashio::config 'homeassistant.api_token')
+# Activeer de virtuele omgeving van Home Assistant.
+source /config/homeassistant/.venv/bin/activate
 
-# URL voor de Home Assistant RESTful API
-API_URL="http://homeassistant.local:8123/api"
-
-# Schakel een specifieke schakelaar in (verander deze naar de gewenste entity_id)
-ENTITY_ID="switch.my_switch"
-
-# Aanroepen van de Home Assistant API om de schakelaar in te schakelen
-curl -X POST -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
-     -d '{"entity_id": "'$ENTITY_ID'"}' \
-     $API_URL/services/switch/turn_on
+# Roep de Home Assistant-service aan om een nieuwe waarde in te stellen voor de entiteit.
+echo "Stel de waarde $NEW_VALUE in voor entiteit $ENTITY_ID"
+hass-cli service call homeassistant/update_entity -d '{
+  "entity_id": "'$ENTITY_ID'",
+  "state": "'$NEW_VALUE'"
+}'
