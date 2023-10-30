@@ -1,4 +1,0 @@
-cron:
-  - name: "api-request-connect-smart"
-    schedule: "*/1 * * * *"
-    command: "/run.sh"
