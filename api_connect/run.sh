@@ -41,7 +41,7 @@ else
     }'
 
     # API-aanroep om de configuratie toe te voegen
-    RESPONSE=$(curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
+    RESPONSE=$(curl -s -X POST -H "Authorization: Bearer $HA_TOKEN" \
          -H "Content-Type: application/json" \
          -d "$ENTITY_CONFIG" \
          -w "%{http_code}" \
@@ -50,7 +50,7 @@ else
 
     if [[ "$RESPONSE" == "403" ]]; then
         echo "403 Forbidden. Stopping the addon."
-        ha core stop
+        core stop
     else
         echo "Nieuwe entiteit toegevoegd aan Home Assistant configuratie"
     fi
@@ -61,7 +61,7 @@ perform_api_request() {
     # Bijvoorbeeld, een API-aanroep om de waarde van een entiteit op te halen
      REMOTE_DATA=$(curl -s "$REMOTE_API_URL")
 
-    RESPONSE=$(curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
+    RESPONSE=$(curl -s -X POST -H "Authorization: Bearer $HA_TOKEN" \
          -H "Content-Type: application/json" \
          -d "{\"state\": \"$REMOTE_DATA\"}" \
          -w "%{http_code}" \
@@ -70,7 +70,7 @@ perform_api_request() {
 
     if [[ "$RESPONSE" == "403" ]]; then
         echo "403 Forbidden. Stopping the addon."
-        ha core stop
+        core stop
     else
         echo "Entiteit $ENTITY_ID bijgewerkt naar $REMOTE_DATA"
     fi
