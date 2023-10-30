@@ -11,9 +11,9 @@
   "host_network": true,
   "homeassistant": "/config",
   "ingress_panel": true,
-  "ingress_url": "/admin",  // Hier stel je de Ingress-URL in
+  "ingress_url": "/admin",
   "ingress_entry": "admin",
-  "ingress_category": "config",  // Hier kun je een categorie voor Ingress instellen
+  "ingress_category": "config",
   "ingress_domain": "your_addon_domain",
   "options": {
     "token": "",
