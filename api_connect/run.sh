@@ -14,23 +14,15 @@ NEW_VALUE="20"
 # Instellingen
 HA_HOST="http://localhost:8123"  # Vervang dit door het adres van jouw Home Assistant
 
-ENTITY_CONFIG='{
-  "platform": "template",
-  "sensors": {
-    "test123": {
-      "value_template": "{{ states.sensor.some_other_sensor.state }}"
-    }
-  }
-}'
-
-# Controleer of de entiteit al bestaat
-  # De entiteit bestaat nog niet, voeg deze toe
-  curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
-       -H "Content-Type: application/json" \
-       -d "$ENTITY_CONFIG" \
-       "$HA_HOST/api/config/config_entries/entry_id/options"
-  echo "Nieuwe entiteit toegevoegd aan Home Assistant configuratie"
-
+curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{
+       \"state\": \"29\",
+       \"attributes\": {
+         \"friendly_name\": \"test123\"
+       }
+     }" \
+     "$HA_HOST/api/states/$ENTITY_ID"
 
 perform_api_request() {
     # Bijvoorbeeld, een API-aanroep om de waarde van een entiteit op te halen
