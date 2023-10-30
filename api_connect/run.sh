@@ -47,8 +47,7 @@ else
          "$HA_HOST/api/states/$ENTITY_ID"
         echo "Nieuwe entiteit toegevoegd aan Home Assistant configuratie"
     fi
-fi
-
+    
 perform_api_request() {
     # Plaats hier je API-aanroep
     # Bijvoorbeeld, een API-aanroep om de waarde van een entiteit op te halen
