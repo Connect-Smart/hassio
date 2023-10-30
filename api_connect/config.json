@@ -7,12 +7,14 @@
   "arch": ["armv7", "armhf", "amd64", "aarch64", "i386"],
   "startup": "system",
   "init": false,
+  "boot": "auto",
+  "host_network": true,
   "homeassistant": "/config",
   "ingress_panel": true,
-  "ingress_url": "/cs_panel",
-  "ingress_entry": "ConnectSmart",
-  "ingress_category": "config",
-  "ingress_domain": "connect_smart",
+  "ingress_url": "/admin",  // Hier stel je de Ingress-URL in
+  "ingress_entry": "admin",
+  "ingress_category": "config",  // Hier kun je een categorie voor Ingress instellen
+  "ingress_domain": "your_addon_domain",
   "options": {
     "token": "",
     "entity": "",
