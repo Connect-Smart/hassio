@@ -31,13 +31,23 @@ if [[ ! -z "$EXISTING_ENTITY" ]]; then
 
     echo "Entiteit $ENTITY_ID bijgewerkt naar $NEW_VALUE"
 else
-    # De entiteit bestaat niet, dus maak deze aan
-    curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
-         -H "Content-Type: application/json" \
-         -d "{\"state\": \"$NEW_VALUE\", \"attributes\": {}}" \
-         "$HA_HOST/api/states/$ENTITY_ID"
 
-    echo "Nieuwe entiteit $ENTITY_ID aangemaakt met waarde $NEW_VALUE"
+ENTITY_CONFIG='{
+  "platform": "template",
+  "sensors": {
+    "example_sensor": {
+      "value_template": "{{ states.sensor.some_other_sensor.state }}"
+    }
+  }
+}'
+
+# API-aanroep om de configuratie toe te voegen
+curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "$ENTITY_CONFIG" \
+     "$HA_HOST/api/config/config_entries/entry_id/options"
+     
+     echo "Nieuwe entiteit $ENTITY_ID aangemaakt met waarde $NEW_VALUE"
  fi
 
 perform_api_request() {
