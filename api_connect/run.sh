@@ -17,7 +17,7 @@ HA_HOST="http://127.0.0.1:8123"  # Vervang dit door het adres van jouw Home Assi
 ENTITY_CONFIG='{
   "platform": "template",
   "sensors": {
-    "example_sensor": {
+    "test123": {
       "value_template": "{{ states.sensor.some_other_sensor.state }}"
     }
   }
