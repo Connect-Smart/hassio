@@ -3,8 +3,10 @@
 CONFIG_PATH=/data/options.json
 
 HA_TOKEN=$(jq --raw-output ".token" $CONFIG_PATH)
-ENTITY_ID=$(jq --raw-output ".entity" $CONFIG_PATH)
+ENTITY=$(jq --raw-output ".entity" $CONFIG_PATH)
 API_KEY=$(jq --raw-output ".apikey" $CONFIG_PATH)
+
+ENTITY_ID="sensor.$ENTITY"  # Vervang dit door het gewenste entiteits-ID
 REMOTE_API_URL="https://www.voxip.nl/api/"
 INTERVAL=2  # Tijd in seconden tussen elk API-verzoek
 
@@ -32,7 +34,7 @@ else
     ENTITY_CONFIG='{
       "platform": "template",
       "sensors": {
-        "example_sensor": {
+        "$ENTITY": {
           "value_template": "{{ states.sensor.some_other_sensor.state }}"
         }
       }
