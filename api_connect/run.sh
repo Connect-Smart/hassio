@@ -26,6 +26,7 @@ ENTITY_CONFIG='{
 # Controleer of de entiteit al bestaat
 EXISTING_ENTITY=$(curl -s -H "Authorization: Bearer $HA_TOKEN" \
    "$HA_HOST/api/states/sensor.example_sensor")
+        echo "Entiteit $EXISTING_ENTITY"
 
 if [ "$EXISTING_ENTITY" == "Entity not found" ]; then
   # De entiteit bestaat nog niet, voeg deze toe
