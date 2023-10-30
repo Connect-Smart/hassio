@@ -21,7 +21,7 @@ if [[ ! -z "$EXISTING_ENTITY" ]]; then
     NEW_VALUE="40"
 
     # API-aanroep om de entiteit bij te werken
-    curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
+    curl -s -X POST -H "Authorization: Bearer $HA_TOKEN" \
          -H "Content-Type: application/json" \
          -d "{\"state\": \"$NEW_VALUE\"}" \
          "$HA_HOST/api/states/$ENTITY_ID"
@@ -39,7 +39,7 @@ else
     }'
 
     # API-aanroep om de configuratie toe te voegen
-    curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
+    curl -s -X POST -H "Authorization: Bearer $HA_TOKEN" \
          -H "Content-Type: application/json" \
          -d "$ENTITY_CONFIG" \
          "$HA_HOST/api/config/config_entries/entry_id/options"
@@ -52,7 +52,7 @@ perform_api_request() {
     # Bijvoorbeeld, een API-aanroep om de waarde van een entiteit op te halen
      REMOTE_DATA=$(curl -s "$REMOTE_API_URL")
 
-    curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
+    curl -s -X POST -H "Authorization: Bearer $HA_TOKEN" \
          -H "Content-Type: application/json" \
          -d "{\"state\": \"$REMOTE_DATA\"}" \
          "$HA_HOST/api/states/$ENTITY_ID"
