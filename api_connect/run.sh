@@ -34,7 +34,7 @@ else
     ENTITY_CONFIG='{
       "platform": "template",
       "sensors": {
-        "$ENTITY": {
+        "test": {
           "value_template": "{{ states.sensor.some_other_sensor.state }}"
         }
       }
