@@ -1,5 +1,4 @@
-#!/usr/bin/with-contenv bashio
-set -e
+#!/bin/bash
 
 # Inclusie van Bashio-configuratie
 source /config/bashio/config.json
