@@ -21,9 +21,9 @@ EXISTING_ENTITY=$(curl -s -X GET -H "Authorization: Bearer $HA_TOKEN" \
 # Als de entiteit al bestaat, werk deze dan bij
 if [[ ! -z "$EXISTING_ENTITY" ]]; then
     # De waarde die je wilt instellen
-    NEW_VALUE="40"
+    NEW_VALUE="42"
 
-     # De entiteit bestaat al, dus werk deze bij
+    # API-aanroep om de entiteit bij te werken
     curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
          -H "Content-Type: application/json" \
          -d "{\"state\": \"$NEW_VALUE\"}" \
@@ -31,24 +31,25 @@ if [[ ! -z "$EXISTING_ENTITY" ]]; then
 
     echo "Entiteit $ENTITY_ID bijgewerkt naar $NEW_VALUE"
 else
+    # De configuratie voor de nieuwe entiteit
+    ENTITY_CONFIG='{
+      "platform": "template",
+      "sensors": {
+        "example_sensor": {
+          "value_template": "{{ states.sensor.some_other_sensor.state }}"
+        }
+      }
+    }'
 
-ENTITY_CONFIG='{
-  "platform": "template",
-  "sensors": {
-    "example_sensor": {
-      "value_template": "{{ states.sensor.some_other_sensor.state }}"
-    }
-  }
-}'
+    # API-aanroep om de configuratie toe te voegen
+    curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
+         -H "Content-Type: application/json" \
+         -d "$ENTITY_CONFIG" \
+         "$HA_HOST/api/config/config_entries/entry_id/options"
 
-# API-aanroep om de configuratie toe te voegen
-curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
-     -H "Content-Type: application/json" \
-     -d "$ENTITY_CONFIG" \
-     "$HA_HOST/api/config/config_entries/entry_id/options"
-     
-     echo "Nieuwe entiteit $ENTITY_ID aangemaakt met waarde $NEW_VALUE"
- fi
+    echo "Nieuwe entiteit toegevoegd aan Home Assistant configuratie"
+
+fi
 
 perform_api_request() {
     # Plaats hier je API-aanroep
