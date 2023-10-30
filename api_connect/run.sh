@@ -12,7 +12,7 @@ INTERVAL=5  # Tijd in seconden tussen elk API-verzoek
 NEW_VALUE="20"
 
 # Instellingen
-HA_HOST="http://127.0.0.1:8123"  # Vervang dit door het adres van jouw Home Assistant
+HA_HOST="http://localhost:8123"  # Vervang dit door het adres van jouw Home Assistant
 
 ENTITY_CONFIG='{
   "platform": "template",
