@@ -1,7 +1,7 @@
 {
-  "name": "API Connect_Smart",
+  "name": "API Connect-Smart",
   "version": "1.0.0",
-  "slug": "api connect_smart",
+  "slug": "api",
   "description": "API Connect-Smart",
   "url": "https://github.com/Connect-Smart/hassio/tree/main/api_connect",
   "arch": ["armv7", "armhf", "amd64", "aarch64", "i386"],
