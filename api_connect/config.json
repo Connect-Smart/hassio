@@ -10,6 +10,8 @@
   "boot": "auto",
   "host_network": true,
   "homeassistant": "/config",
+  "ingress": true,
+  "ingress_port": 8099,
   "ingress_panel": true,
   "ingress_url": "/admin",
   "ingress_entry": "admin",
