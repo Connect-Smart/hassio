@@ -1,16 +1,20 @@
 #!/bin/bash
-set -e
 
-# Vervang 'your_entity_id' door de gewenste entiteit-id en 'your_value' door de gewenste waarde.
-ENTITY_ID="your_entity_id"
-NEW_VALUE="your_value"
+CONFIG_PATH=/data/options.json
 
-# Activeer de virtuele omgeving van Home Assistant.
-source /config/homeassistant/.venv/bin/activate
+HA_TOKEN=$(jq --raw-output ".token" $CONFIG_PATH)
+ENTITY_ID=$(jq --raw-output ".entity" $CONFIG_PATH)
 
-# Roep de Home Assistant-service aan om een nieuwe waarde in te stellen voor de entiteit.
-echo "Stel de waarde $NEW_VALUE in voor entiteit $ENTITY_ID"
-hass-cli service call homeassistant/update_entity -d '{
-  "entity_id": "'$ENTITY_ID'",
-  "state": "'$NEW_VALUE'"
-}'
+# Instellingen
+HA_HOST="http://localhost:8123"  # Vervang dit door het adres van jouw Home Assistant
+
+# De waarde die je wilt instellen
+NEW_VALUE="42"
+
+# API-aanroep om de entiteit bij te werken
+curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"state\": \"$NEW_VALUE\"}" \
+     "$HA_HOST/api/states/$ENTITY_ID"
+
+echo "Entiteit $ENTITY_ID bijgewerkt naar $NEW_VALUE"

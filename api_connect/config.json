@@ -10,9 +10,13 @@
   "boot": "auto",
   "host_network": true,
   "options": {
+    "token": "",
+    "entity": "",
     "apikey": ""
   },
   "schema": {
+    "token": "str",
+    "entity": "str",
     "apikey": "str"
   }
 }
