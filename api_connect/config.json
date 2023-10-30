@@ -6,7 +6,6 @@
   "url": "https://github.com/Connect-Smart/hassio/tree/main/api_connect",
   "arch": ["armv7", "armhf", "amd64", "aarch64", "i386"],
   "startup": "system",
-  "homeassistant": "/config",
   "ingress_panel": true,
   "ingress_url": "/cs_panel",
   "ingress_entry": "ConnectSmart",
