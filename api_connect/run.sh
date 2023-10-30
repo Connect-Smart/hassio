@@ -3,7 +3,7 @@
 CONFIG_PATH=/data/options.json
 
 HA_TOKEN=$(jq --raw-output ".token" $CONFIG_PATH)
-#ENTITY_ID=$(jq --raw-output ".entity" $CONFIG_PATH)
+ENTITY_ID=$(jq --raw-output ".entity" $CONFIG_PATH)
 API_KEY=$(jq --raw-output ".apikey" $CONFIG_PATH)
 
 #ENTITY_ID="sensor.$ENTITY"  # Vervang dit door het gewenste entiteits-ID
@@ -18,7 +18,7 @@ HA_HOST="http://127.0.0.1:8123"  # Vervang dit door het adres van jouw Home Assi
     ENTITY_CONFIG='{
       "platform": "template",
       "sensors": {
-        "test123": {
+        "example_sensor": {
           "value_template": "{{ states.sensor.some_other_sensor.state }}"
         }
       }
@@ -42,13 +42,13 @@ perform_api_request() {
          -d "{\"state\": \"$REMOTE_DATA\"}" \
          -w "%{http_code}" \
          -o /dev/null \
-         "$HA_HOST/api/states/test123")
+         "$HA_HOST/api/states/$ENTITY_ID")
 
     if [[ "$RESPONSE" == "403" ]]; then
         echo "403 Forbidden. Stopping the addon."
         core stop
     else
-        echo "Entiteit test123 bijgewerkt naar $REMOTE_DATA"
+        echo "Entiteit $ENTITY_ID bijgewerkt naar $REMOTE_DATA"
     fi
 }
 
