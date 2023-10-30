@@ -33,23 +33,16 @@ ENTITY_CONFIG='{
 
 
 perform_api_request() {
-    # Plaats hier je API-aanroep
     # Bijvoorbeeld, een API-aanroep om de waarde van een entiteit op te halen
-     REMOTE_DATA=$(curl -s "$REMOTE_API_URL")
+    REMOTE_DATA=$(curl "$REMOTE_API_URL")
 
-    RESPONSE=$(curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
-         -H "Content-Type: application/json" \
-         -d "{\"state\": \"$REMOTE_DATA\"}" \
-         -w "%{http_code}" \
-         -o /dev/null \
-         "$HA_HOST/api/states/$ENTITY_ID")
+    # API-aanroep om de entiteit bij te werken
+    curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
+        -H "Content-Type: application/json" \
+        -d "{\"state\": \"$REMOTE_DATA\"}" \
+        "$HA_HOST/api/states/$ENTITY_ID"
 
-    if [[ "$RESPONSE" == "403" ]]; then
-        echo "403 Forbidden. Stopping the addon."
-        core stop
-    else
-        echo "Entiteit $ENTITY_ID bijgewerkt naar $REMOTE_DATA"
-    fi
+    echo "Entiteit $ENTITY_ID bijgewerkt naar $REMOTE_DATA"
 }
 
 # Start de lus
