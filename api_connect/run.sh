@@ -9,6 +9,7 @@ API_KEY=$(jq --raw-output ".apikey" $CONFIG_PATH)
 ENTITY_ID="sensor.$ENTITY"  # Vervang dit door het gewenste entiteits-ID
 REMOTE_API_URL="https://www.voxip.nl/api/"
 INTERVAL=5  # Tijd in seconden tussen elk API-verzoek
+NEW_VALUE="20"
 
 # Instellingen
 HA_HOST="http://127.0.0.1:8123"  # Vervang dit door het adres van jouw Home Assistant
@@ -22,7 +23,7 @@ if [[ ! -z "$EXISTING_ENTITY" ]]; then
     # De waarde die je wilt instellen
     NEW_VALUE="40"
 
-    # API-aanroep om de entiteit bij te werken
+     # De entiteit bestaat al, dus werk deze bij
     curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
          -H "Content-Type: application/json" \
          -d "{\"state\": \"$NEW_VALUE\"}" \
@@ -30,23 +31,13 @@ if [[ ! -z "$EXISTING_ENTITY" ]]; then
 
     echo "Entiteit $ENTITY_ID bijgewerkt naar $NEW_VALUE"
 else
-    # De configuratie voor de nieuwe entiteit
-    ENTITY_CONFIG='{
-      "platform": "template",
-      "sensors": {
-        "test": {
-          "value_template": "{{ states.sensor.some_other_sensor.state }}"
-        }
-      }
-    }'
-
-    # API-aanroep om de configuratie toe te voegen
-   curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
+    # De entiteit bestaat niet, dus maak deze aan
+    curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
          -H "Content-Type: application/json" \
-         -d "{\"state\": \"$NEW_VALUE\"}" \
+         -d "{\"state\": \"$NEW_VALUE\", \"attributes\": {}}" \
          "$HA_HOST/api/states/$ENTITY_ID"
-        echo "Nieuwe entiteit toegevoegd aan Home Assistant configuratie"
-    fi
+
+    echo "Nieuwe entiteit $ENTITY_ID aangemaakt met waarde $NEW_VALUE"
     
 perform_api_request() {
     # Plaats hier je API-aanroep
