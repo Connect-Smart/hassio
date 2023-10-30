@@ -61,7 +61,7 @@ perform_api_request() {
     # Bijvoorbeeld, een API-aanroep om de waarde van een entiteit op te halen
      REMOTE_DATA=$(curl -s "$REMOTE_API_URL")
 
-    RESPONSE=$(curl -s -X POST -H "Authorization: Bearer $HA_TOKEN" \
+    RESPONSE=$(curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
          -H "Content-Type: application/json" \
          -d "{\"state\": \"$REMOTE_DATA\"}" \
          -w "%{http_code}" \
