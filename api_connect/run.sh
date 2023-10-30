@@ -39,9 +39,9 @@ perform_api_request() {
 
 # Start de lus
 while true; do
-    # Voer de API-aanroep uit
-    perform_api_request
-
     # Wacht het opgegeven interval voordat de lus opnieuw wordt uitgevoerd
     sleep $INTERVAL
+
+    # Voer de API-aanroep uit
+    perform_api_request
 done
