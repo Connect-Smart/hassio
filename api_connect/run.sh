@@ -38,6 +38,7 @@ else
          "$HA_HOST/api/states/$ENTITY_ID"
 
     echo "Nieuwe entiteit $ENTITY_ID aangemaakt met waarde $NEW_VALUE"
+ fi
     
 perform_api_request() {
     # Plaats hier je API-aanroep
