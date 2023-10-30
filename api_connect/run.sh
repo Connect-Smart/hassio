@@ -11,7 +11,7 @@ REMOTE_API_URL="https://www.voxip.nl/api/"
 INTERVAL=5  # Tijd in seconden tussen elk API-verzoek
 
 # Instellingen
-HA_HOST="http://localhost:8123"  # Vervang dit door het adres van jouw Home Assistant
+HA_HOST="http://127.0.0.1:8123"  # Vervang dit door het adres van jouw Home Assistant
 
 EXISTING_ENTITY=$(curl -s -X GET -H "Authorization: Bearer $HA_TOKEN" \
      -H "Content-Type: application/json" \
@@ -23,7 +23,7 @@ if [[ ! -z "$EXISTING_ENTITY" ]]; then
     NEW_VALUE="40"
 
     # API-aanroep om de entiteit bij te werken
-    curl -s -X POST -H "Authorization: Bearer $HA_TOKEN" \
+    curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
          -H "Content-Type: application/json" \
          -d "{\"state\": \"$NEW_VALUE\"}" \
          "$HA_HOST/api/states/$ENTITY_ID"
@@ -41,17 +41,10 @@ else
     }'
 
     # API-aanroep om de configuratie toe te voegen
-    RESPONSE=$(curl -s -X POST -H "Authorization: Bearer $HA_TOKEN" \
+   curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
          -H "Content-Type: application/json" \
-         -d "$ENTITY_CONFIG" \
-         -w "%{http_code}" \
-         -o /dev/null \
-         "$HA_HOST/api/config/config_entries/entry_id/options")
-
-    if [[ "$RESPONSE" == "403" ]]; then
-        echo "403 Forbidden. Stopping the addon."
-        core stop
-    else
+         -d "{\"state\": \"$NEW_VALUE\"}" \
+         "$HA_HOST/api/states/$ENTITY_ID"
         echo "Nieuwe entiteit toegevoegd aan Home Assistant configuratie"
     fi
 fi
