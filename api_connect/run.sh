@@ -3,10 +3,10 @@
 CONFIG_PATH=/data/options.json
 
 HA_TOKEN=$(jq --raw-output ".token" $CONFIG_PATH)
-ENTITY=$(jq --raw-output ".entity" $CONFIG_PATH)
+ENTITY_ID=$(jq --raw-output ".entity" $CONFIG_PATH)
 API_KEY=$(jq --raw-output ".apikey" $CONFIG_PATH)
 
-ENTITY_ID="sensor.$ENTITY"  # Vervang dit door het gewenste entiteits-ID
+#ENTITY_ID="sensor.$ENTITY"  # Vervang dit door het gewenste entiteits-ID
 REMOTE_API_URL="https://www.voxip.nl/api/"
 INTERVAL=5  # Tijd in seconden tussen elk API-verzoek
 NEW_VALUE="20"
@@ -39,7 +39,7 @@ else
 
     echo "Nieuwe entiteit $ENTITY_ID aangemaakt met waarde $NEW_VALUE"
  fi
-    
+
 perform_api_request() {
     # Plaats hier je API-aanroep
     # Bijvoorbeeld, een API-aanroep om de waarde van een entiteit op te halen
