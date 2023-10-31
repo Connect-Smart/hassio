@@ -72,6 +72,12 @@ server {
         root   /www;
         index  index.html;
     }
+    error_page 404 /index.html;
+    location = /index.html {
+            root /www;
+            internal;
+    }
+
 }
 EOF
 
