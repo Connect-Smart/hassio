@@ -49,7 +49,7 @@ cat <<EOF > /www/index.html
 <!DOCTYPE html>
 <html>
 <body>
-<h2>$NEW_ENTITY_NAME: <span id="entityValue">$NEW_ENTITY_STATE</span></h2>
+<h2>$ENTITY_ID: <span id="entityValue">$REMOTE_DATA</span></h2>
 </body>
 </html>
 EOF
