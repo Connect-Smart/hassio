@@ -40,6 +40,8 @@ perform_api_request() {
 mkdir www
 mkdir -p /etc/nginx/conf.d
 chmod 777 www
+chmod 777 /etc/nginx
+chmod 777 /etc/nginx/conf.d
 
 # Maak een eenvoudige HTML-pagina met de entiteitswaarde
 cat <<EOF > /www/index.html
@@ -51,14 +53,12 @@ cat <<EOF > /www/index.html
 </html>
 EOF
 
-
 # Configureer de webserver
 echo "daemon off;" >> /etc/nginx/nginx.conf
 echo "error_log /dev/stdout info;" >> /etc/nginx/nginx.conf
 
 # Maak een Nginx-configuratiebestand voor de webpagina
 cat <<EOF > /etc/nginx/conf.d/default.conf
-http {
     server {
         listen       8099;
         server_name  localhost;
@@ -68,7 +68,6 @@ http {
             index  index.html;
         }
     }
-}
 EOF
 
 # Start Nginx
