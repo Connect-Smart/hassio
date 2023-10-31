@@ -16,7 +16,7 @@ app.get('/admin', (req, res) => {
 wss.on('connection', (ws) => {
   // Stuur de huidige status van de entity naar de client bij verbinding
   const currentState = {
-    state: 'unknown', // Vervang door de juiste startstatus van de entity
+    state: 'on', // Vervang door de juiste startstatus van de entity
   };
   ws.send(JSON.stringify(currentState));
 
