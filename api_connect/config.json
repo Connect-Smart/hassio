@@ -10,8 +10,14 @@
   "boot": "auto",
   "host_network": true,
   "homeassistant": "/config",
-  "ingress": true,
-  "ingress_port": 8099,
+  "ingress": [
+    {
+      "port": 8099,
+      "local_path": "/usr/share/nginx/html",
+      "remote_path": "/",
+      "type": "web"
+    }
+  ],
   "ingress_panel": true,
   "ingress_url": "/admin",
   "ingress_entry": "admin",
