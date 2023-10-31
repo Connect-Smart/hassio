@@ -8,8 +8,9 @@ const server = http.createServer((req, res) => {
     const html = fs.readFileSync("www/index.html", "utf-8");
     res.end(html);
   } else {
-    res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end("Not Found");
+    res.writeHead(200, { "Content-Type": "text/html" });
+    const html = fs.readFileSync("www/index.html", "utf-8");
+    res.end(html);
   }
 });
 
