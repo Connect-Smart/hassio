@@ -11,7 +11,7 @@
   "host_network": true,
   "homeassistant": "/config",
   "ingress": true,
-  "ingress_port": 8099,
+  "ingress_port": 8080,
   "ingress_panel": true,
   "ingress_url": "/api_connect_smart",
   "ingress_entry": "admin",
