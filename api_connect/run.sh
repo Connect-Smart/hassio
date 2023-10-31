@@ -60,10 +60,10 @@ apk add nginx
 echo "daemon off;" >> /etc/nginx/nginx.conf
 echo "error_log /dev/stdout info;" >> /etc/nginx/nginx.conf
 
-cat /etc/nginx/nginx.conf
+#cat /etc/nginx/nginx.conf
 
 # Maak een Nginx-configuratiebestand voor de webpagina
-cat <<EOF > /etc/nginx/conf.d/default.conf
+cat <<EOF > /etc/nginx/http.d/default.conf
 server {
     listen       $WEB_PORT;
     server_name  localhost;
