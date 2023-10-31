@@ -10,11 +10,6 @@ ENTITY_ID="sensor.energie_prijzen_CS"  # Vervang dit door het gewenste entiteits
 REMOTE_API_URL="https://www.voxip.nl/api/"
 INTERVAL=5  # Tijd in seconden tussen elk API-verzoek
 NEW_VALUE="0"
-PAGE_CONTENT="<!DOCTYPE html><html><head><title>Entity Viewer</title></head><body><h1>Entity Viewer</h1><p>Entity: $ENTITY_ID</p><iframe src=\"$HA_HOST/lovelace/0\" width=\"800\" height=\"600\"></iframe></body></html>"
-# Start een eenvoudige webserver om de pagina weer te geven
-mkdir www
-chmod 777 www
-echo -e "$PAGE_CONTENT" > /www/index.html
 
 # Instellingen
 HA_HOST="http://localhost:8123"  # Vervang dit door het adres van jouw Home Assistant
@@ -42,7 +37,39 @@ perform_api_request() {
     echo "Entiteit $ENTITY_ID bijgewerkt naar $REMOTE_DATA"
 }
 
-python3 -m http.server --directory /www 8099
+# Maak een eenvoudige HTML-pagina met de entiteitswaarde
+cat <<EOF > /www/index.html
+<!DOCTYPE html>
+<html>
+<body>
+<h2>$NEW_ENTITY_NAME: <span id="entityValue">$NEW_ENTITY_STATE</span></h2>
+</body>
+</html>
+EOF
+
+# Installeer een eenvoudige webserver zoals Nginx
+apk add nginx
+
+# Configureer de webserver
+echo "daemon off;" >> /etc/nginx/nginx.conf
+echo "error_log /dev/stdout info;" >> /etc/nginx/nginx.conf
+
+# Maak een Nginx-configuratiebestand voor de webpagina
+cat <<EOF > /etc/nginx/conf.d/default.conf
+server {
+    listen       80;
+    server_name  localhost;
+
+    location / {
+        root   /www;
+        index  index.html;
+    }
+}
+EOF
+
+# Start Nginx
+nginx
+
 
 
 # Start de lus
