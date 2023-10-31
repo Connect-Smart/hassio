@@ -1,39 +1,54 @@
-const express = require('express');
-const WebSocket = require('home-assistant-js-websocket');
-const app = express();
+const WebSocket = require('ws');
+const http = require('http');
+const url = require('url');
+const fs = require('fs');
+const path = require('path');
 
-// Verander dit naar het IP-adres en het wachtwoord van je Home Assistant-installatie.
-const haUrl = 'http://10.0.0.20:8123';
-const haAuthToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI0MmJiYzgzOTA3YTQ0NjgyYTIwMDU3YTg0MWM4ZDZmMSIsImlhdCI6MTY5ODc5MTcxMSwiZXhwIjoyMDE0MTUxNzExfQ.AgCMiPY7svqVC3fs_PxiePBFWtEg6cQYG-eISc1q18Y';
+const ENTITY_ID = 'sensor.example_sensor'; // Vervang dit door de entiteit die je wilt volgen
 
-const haSocket = new WebSocket.Connection({
-  createSocketUrl: (path) => `${haUrl}/api/websocket`,
-  accessToken: haAuthToken,
+const server = http.createServer((req, res) => {
+  const { pathname } = url.parse(req.url, true);
+
+  if (pathname === '/') {
+    const filePath = path.join(__dirname, 'index.html');
+    const readStream = fs.createReadStream(filePath);
+    readStream.pipe(res);
+  }
 });
 
-haSocket.connect();
+const wss = new WebSocket.Server({ server });
+let currentValue = 'unknown';
 
-app.get('/', (req, res) => {
-  res.send(`
-    <h1>Status van de entiteit</h1>
-    <p id="entityStatus">Laden...</p>
-    <script>
-      const entityStatus = document.getElementById('entityStatus');
-      const socket = new WebSocket('${haUrl}/api/websocket');
-      socket.onopen = () => {
-        socket.send(JSON.stringify({ type: 'auth', access_token: '${haAuthToken}' }));
-        socket.send(JSON.stringify({ id: 1, type: 'subscribe_events', event_type: 'state_changed' }));
-      };
-      socket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        if (data.type === 'event' && data.event.event_type === 'state_changed') {
-          entityStatus.innerText = 'Status: ' + data.event.data.new_state.state;
-        }
-      };
-    </script>
-  `);
+wss.on('connection', (ws) => {
+  ws.send(currentValue);
+
+  const interval = setInterval(() => {
+    ws.send(currentValue);
+  }, 1000);
+
+  ws.on('close', () => {
+    clearInterval(interval);
+  });
 });
 
-app.listen(8099, () => {
-  console.log('Server gestart op poort 8099');
+// Update deze functie om de status van de entiteit te verkrijgen
+function getEntityState() {
+  // Hier zou je de huidige status van de entiteit van Home Assistant moeten ophalen
+  // Je kunt hier de juiste Home Assistant API gebruiken
+  // In dit voorbeeld wordt gewoon een willekeurige waarde geretourneerd
+  return Math.random() > 0.5 ? 'on' : 'off';
+}
+
+setInterval(() => {
+  const newState = getEntityState();
+  if (newState !== currentValue) {
+    currentValue = newState;
+    wss.clients.forEach((client) => {
+      client.send(currentValue);
+    });
+  }
+}, 2000);
+
+server.listen(8099, () => {
+  console.log('Server running on port 8099');
 });
