@@ -21,7 +21,7 @@ wss.on('connection', (ws) => {
   ws.send(JSON.stringify(currentState));
 
   // Luister naar wijzigingen in de entity-status van Home Assistant
-  const homeAssistantSocket = new WebSocket('ws://homeassistant.local:8123/api/websocket');
+  const homeAssistantSocket = new WebSocket('ws://10.0.0.20:8123/api/websocket');
   homeAssistantSocket.on('message', (message) => {
     const msg = JSON.parse(message);
     if (msg.type === 'event' && msg.event.event_type === 'state_changed') {
