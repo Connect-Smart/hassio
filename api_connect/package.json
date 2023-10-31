@@ -13,5 +13,6 @@
     "ws": "^8.14.2"
   },
   "keywords": [],
+  "devDependencies": {},
   "description": ""
 }
