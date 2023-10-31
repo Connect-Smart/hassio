@@ -1,56 +1,45 @@
-const WebSocket = require("ws");
-const http = require("http");
-const fs = require("fs");
+const http = require('http');
+const WebSocket = require('ws');
+const homeassistant = require('homeassistant-api'); // Vereist 'homeassistant-api' of een soortgelijke bibliotheek
+
+// Verbinding maken met Home Assistant
+const ha = homeassistant({
+  host: 'http://homeassistant.local',
+  token: 'YOUR_LONG_LIVED_ACCESS_TOKEN',
+});
 
 const server = http.createServer((req, res) => {
-  if (req.url === "/") {
-    res.writeHead(200, { "Content-Type": "text/html" });
-    const html = fs.readFileSync("index.html", "utf-8");
-    res.end(html);
-  } else {
-    res.writeHead(200, { "Content-Type": "text/html" });
-    const html = fs.readFileSync("index.html", "utf-8");
-    res.end(html);
-  }
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Dit is een Home Assistant add-on met WebSocket-ondersteuning!\n');
 });
 
-const wss = new WebSocket.Server({ noServer: true });
+const wss = new WebSocket.Server({ server });
 
-wss.on("connection", (ws) => {
-  console.log("WebSocket client connected");
+wss.on('connection', (ws) => {
+  // Wanneer een client een WebSocket-verbinding tot stand brengt
 
-  // Simuleer periodieke updates
-  const updateInterval = setInterval(() => {
-    const entityName = "New Sensor";
-    const entityValue = Math.floor(Math.random() * 100);
-    ws.send(
-      JSON.stringify({
-        event_type: "state_changed",
-        data: {
-          entity_id: "sensor.energie_prijzen_CS",
-          new_state: {
-            attributes: {
-              friendly_name: entityName,
-            },
-            state: entityValue.toString(),
-          },
-        },
-      })
-    );
-  }, 5000);
+  // Abonneer je op updates van een specifieke entiteit (bijv. een licht)
+  const entityId = 'light.living_room';
+  ha.subscribeState(entityId, (newState) => {
+    // Verstuur de nieuwe entiteitstoestand naar de WebSocket-client
+    ws.send(JSON.stringify({ entity: entityId, state: newState }));
+  });
 
-  ws.on("close", () => {
-    console.log("WebSocket client disconnected");
-    clearInterval(updateInterval);
+  ws.on('close', () => {
+    // Wanneer de client de WebSocket-verbinding sluit, stop de entiteitssubscriptie
+    ha.unsubscribeState(entityId);
   });
 });
 
-server.on("upgrade", (request, socket, head) => {
-  wss.handleUpgrade(request, socket, head, (ws) => {
-    wss.emit("connection", ws, request);
-  });
+const port = process.env.PORT || 3000;
+
+server.listen(port, () => {
+  console.log(`Server draait op poort ${port}`);
 });
 
-server.listen(8080, () => {
-  console.log("Web server is running on port 8080");
+process.on('SIGTERM', () => {
+  console.log('Ontvangen SIGTERM, server wordt afgesloten...');
+  server.close(() => {
+    console.log('Server is gestopt.');
+  });
 });
