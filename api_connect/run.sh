@@ -38,10 +38,8 @@ perform_api_request() {
 }
 
 mkdir www
-mkdir -p /etc/nginx/conf.d
 chmod 777 www
 chmod 777 /etc/nginx
-chmod 777 /etc/nginx/conf.d
 
 # Maak een eenvoudige HTML-pagina met de entiteitswaarde
 cat <<EOF > /www/index.html
