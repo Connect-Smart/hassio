@@ -51,6 +51,6 @@ homeAssistantSocket.on('message', (message) => {
   }
 });
 
-server.listen(3000, () => {
-  console.log('Addon is gestart op poort 3000');
+server.listen(8099, () => {
+  console.log('Addon is gestart op poort 8099');
 });
