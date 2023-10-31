@@ -36,14 +36,6 @@ perform_api_request() {
         "$HA_HOST/api/states/$ENTITY_ID"
 
     echo "Entiteit $ENTITY_ID bijgewerkt naar $REMOTE_DATA"
-cat <<EOF > /www/index.html
-<!DOCTYPE html>
-<html>
-<body>
-<h2>$ENTITY_ID: <span id="entityValue">$REMOTE_DATA</span></h2>
-</body>
-</html>
-EOF
 }
 
 mkdir www
@@ -57,7 +49,25 @@ cat <<EOF > /www/index.html
 <!DOCTYPE html>
 <html>
 <body>
-<h2>$ENTITY_ID: <span id="entityValue">$REMOTE_DATA</span></h2>
+<h2 id="entityName">Loading...</h2>
+<h2 id="entityValue">Loading...</h2>
+<script>
+  const entityNameElement = document.getElementById("entityName");
+  const entityValueElement = document.getElementById("entityValue");
+
+  // WebSocket-verbinding met Home Assistant
+  const socket = new WebSocket("ws://localhost:8123/api/websocket");
+
+  // Luister naar updates van de entiteit
+  socket.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    if (data.event_type === "state_changed" && data.data.entity_id === "sensor.energie_prijzen_CS") {
+      const newState = data.data.new_state;
+      entityNameElement.textContent = newState.attributes.friendly_name;
+      entityValueElement.textContent = newState.state;
+    }
+  };
+</script>
 </body>
 </html>
 EOF
