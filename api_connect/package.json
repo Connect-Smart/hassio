@@ -8,8 +8,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.18.2",
+    "home-assistant-js-websocket": "^9.1.0",
     "ws": "^8.14.2"
   },
-  "devDependencies": {},
+  "keywords": [],
   "description": ""
 }
