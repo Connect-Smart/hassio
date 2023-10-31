@@ -7,7 +7,7 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 // Vervang 'jouw_entity_id' door de ID van de Home Assistant entity die je wilt volgen
-const entityId = 'sensor.eettafel_lamp';
+const entityId = 'sensor.test444';
 
 // Houd de huidige status bij
 let currentState = {
