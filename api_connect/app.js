@@ -9,34 +9,48 @@ const wss = new WebSocket.Server({ server });
 // Vervang 'jouw_entity_id' door de ID van de Home Assistant entity die je wilt volgen
 const entityId = 'sensor.eettafel_lamp';
 
-app.get('/admin', (req, res) => {
+// Houd de huidige status bij
+let currentState = {
+  state: 'unknown', // Vervang door de juiste startstatus van de entity
+};
+
+app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
 wss.on('connection', (ws) => {
   // Stuur de huidige status van de entity naar de client bij verbinding
-  const currentState = {
-    state: 'on', // Vervang door de juiste startstatus van de entity
-  };
   ws.send(JSON.stringify(currentState));
-
-  // Luister naar wijzigingen in de entity-status van Home Assistant
-  const homeAssistantSocket = new WebSocket('ws://10.0.0.20:8123/api/websocket');
-  homeAssistantSocket.on('message', (message) => {
-    const msg = JSON.parse(message);
-    if (msg.type === 'event' && msg.event.event_type === 'state_changed') {
-      const newState = msg.event.data.new_state;
-      if (newState.entity_id === entityId) {
-        ws.send(JSON.stringify(newState));
-      }
-    }
-  });
-
-  ws.on('close', () => {
-    homeAssistantSocket.close();
-  });
 });
 
-server.listen(8099, () => {
-  console.log('Addon is gestart op poort 8099');
+// Luister naar wijzigingen in de entity-status van Home Assistant
+const homeAssistantSocket = new WebSocket('ws://homeassistant.local:8123/api/websocket');
+
+homeAssistantSocket.on('open', () => {
+  homeAssistantSocket.send(
+    JSON.stringify({
+      type: 'subscribe_events',
+      event_type: 'state_changed',
+    })
+  );
+});
+
+homeAssistantSocket.on('message', (message) => {
+  const msg = JSON.parse(message);
+  if (msg.type === 'event' && msg.event.event_type === 'state_changed') {
+    const newState = msg.event.data.new_state;
+    if (newState.entity_id === entityId) {
+      currentState = newState;
+      // Stuur de bijgewerkte status naar alle aangesloten clients
+      wss.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(JSON.stringify(currentState));
+        }
+      });
+    }
+  }
+});
+
+server.listen(3000, () => {
+  console.log('Addon is gestart op poort 3000');
 });
