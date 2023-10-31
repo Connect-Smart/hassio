@@ -57,7 +57,7 @@ EOF
 apk add nginx
 
 # Configureer de webserver
-echo "daemon off;" >> /etc/nginx/nginx.conf
+#echo "daemon off;" >> /etc/nginx/nginx.conf
 echo "error_log /dev/stdout info;" >> /etc/nginx/nginx.conf
 
 #cat /etc/nginx/nginx.conf
