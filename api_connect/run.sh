@@ -42,7 +42,7 @@ perform_api_request() {
     echo "Entiteit $ENTITY_ID bijgewerkt naar $REMOTE_DATA"
 }
 
-python3 -m http.server --directory /www 8081
+python3 -m http.server --directory /www 8099
 
 
 # Start de lus
