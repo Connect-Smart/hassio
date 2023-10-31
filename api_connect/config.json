@@ -13,10 +13,10 @@
   "ingress": true,
   "ingress_port": 8099,
   "ingress_panel": true,
-  "ingress_url": "/admin",
+  "ingress_url": "/api_connect_smart",
   "ingress_entry": "admin",
   "ingress_category": "config",
-  "ingress_domain": "your_addon_domain",
+  "ingress_domain": "api_connect_smart",
   "options": {
     "privileged": true,
     "token": "",
