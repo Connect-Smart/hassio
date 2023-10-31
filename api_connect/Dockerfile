@@ -1,11 +1,11 @@
-ARG BUILD_FROM
-FROM $BUILD_FROM
+FROM node:14
 
-ENV LANG C.UTF-8
+WORKDIR /app
 
-RUN apk add --no-cache tzdata jq vim curl
+COPY package*.json ./
 
-COPY run.sh /
-RUN chmod a+x /run.sh
+RUN npm install
 
-CMD [ "/run.sh" ]
+COPY . .
+
+CMD [ "node", "app.js" ]
