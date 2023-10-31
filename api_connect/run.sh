@@ -58,9 +58,6 @@ echo "error_log /dev/stdout info;" >> /etc/nginx/nginx.conf
 
 # Maak een Nginx-configuratiebestand voor de webpagina
 cat <<EOF > /etc/nginx/conf.d/default.conf
-events {
-    worker_connections  4096;  ## Default: 1024
-}
 http {
     server {
         listen       8099;
