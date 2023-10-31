@@ -36,6 +36,14 @@ perform_api_request() {
         "$HA_HOST/api/states/$ENTITY_ID"
 
     echo "Entiteit $ENTITY_ID bijgewerkt naar $REMOTE_DATA"
+cat <<EOF > /www/index.html
+<!DOCTYPE html>
+<html>
+<body>
+<h2>$ENTITY_ID: <span id="entityValue">$REMOTE_DATA</span></h2>
+</body>
+</html>
+EOF
 }
 
 mkdir www
@@ -93,4 +101,5 @@ while true; do
 
     # Voer de API-aanroep uit
     perform_api_request
+
 done
