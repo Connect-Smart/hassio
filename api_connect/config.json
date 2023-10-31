@@ -30,6 +30,5 @@
   },
   "ports": {
     "8099/tcp": 8099
-  },
-  "webui": "http://localhost:8099"
+  }
 }
