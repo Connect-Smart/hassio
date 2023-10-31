@@ -38,6 +38,7 @@ perform_api_request() {
 }
 
 mkdir www
+mkdir -p /etc/nginx/conf.d
 chmod 777 www
 
 # Maak een eenvoudige HTML-pagina met de entiteitswaarde
