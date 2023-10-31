@@ -14,7 +14,7 @@ let currentState = {
   state: 'unknown', // Vervang door de juiste startstatus van de entity
 };
 
-app.get('/', (req, res) => {
+app.get('/admin', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
