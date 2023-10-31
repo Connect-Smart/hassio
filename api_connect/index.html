@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entity Status</title>
+  <title>Home Assistant Entity Status</title>
 </head>
 <body>
-    <h1>Entity Status:</h1>
-    <p id="status">Unknown</p>
+  <h1>Status van Entity</h1>
+  <div id="status">Status: Wachten op updates...</div>
 
-    <script>
-        const statusElement = document.getElementById('status');
-        const socket = new WebSocket('wss://localhost:8099');
+  <script>
+    const ws = new WebSocket('ws://localhost:8099');
 
-        socket.addEventListener('message', (event) => {
-            statusElement.textContent = event.data;
-        });
-    </script>
+    ws.addEventListener('message', (event) => {
+      const data = JSON.parse(event.data);
+      document.getElementById('status').textContent = `Status: ${data.state}`;
+    });
+  </script>
 </body>
 </html>

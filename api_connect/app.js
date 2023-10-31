@@ -1,52 +1,42 @@
-const WebSocket = require('ws');
+const express = require('express');
 const http = require('http');
-const url = require('url');
-const fs = require('fs');
-const path = require('path');
+const WebSocket = require('ws');
 
-const ENTITY_ID = 'sensor.example_sensor'; // Vervang dit door de entiteit die je wilt volgen
+const app = express();
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 
-const server = http.createServer((req, res) => {
-  const { pathname } = url.parse(req.url, true);
+// Vervang 'jouw_entity_id' door de ID van de Home Assistant entity die je wilt volgen
+const entityId = 'sensor.eettafel_lamp';
 
-    const filePath = path.join(__dirname, 'index.html');
-    const readStream = fs.createReadStream(filePath);
-    readStream.pipe(res);
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
 });
 
-const wss = new WebSocket.Server({ server });
-let currentValue = 'unknown';
-
 wss.on('connection', (ws) => {
-  ws.send(currentValue);
+  // Stuur de huidige status van de entity naar de client bij verbinding
+  const currentState = {
+    state: 'unknown', // Vervang door de juiste startstatus van de entity
+  };
+  ws.send(JSON.stringify(currentState));
 
-  const interval = setInterval(() => {
-    ws.send(currentValue);
-  }, 1000);
+  // Luister naar wijzigingen in de entity-status van Home Assistant
+  const homeAssistantSocket = new WebSocket('ws://homeassistant.local:8123/api/websocket');
+  homeAssistantSocket.on('message', (message) => {
+    const msg = JSON.parse(message);
+    if (msg.type === 'event' && msg.event.event_type === 'state_changed') {
+      const newState = msg.event.data.new_state;
+      if (newState.entity_id === entityId) {
+        ws.send(JSON.stringify(newState));
+      }
+    }
+  });
 
   ws.on('close', () => {
-    clearInterval(interval);
+    homeAssistantSocket.close();
   });
 });
 
-// Update deze functie om de status van de entiteit te verkrijgen
-function getEntityState() {
-  // Hier zou je de huidige status van de entiteit van Home Assistant moeten ophalen
-  // Je kunt hier de juiste Home Assistant API gebruiken
-  // In dit voorbeeld wordt gewoon een willekeurige waarde geretourneerd
-  return Math.random() > 0.5 ? 'on' : 'off';
-}
-
-setInterval(() => {
-  const newState = getEntityState();
-  if (newState !== currentValue) {
-    currentValue = newState;
-    wss.clients.forEach((client) => {
-      client.send(currentValue);
-    });
-  }
-}, 2000);
-
 server.listen(8099, () => {
-  console.log('Server running on port 8099');
+  console.log('Addon is gestart op poort 8099');
 });
