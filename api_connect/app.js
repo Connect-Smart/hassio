@@ -5,11 +5,11 @@ const fs = require("fs");
 const server = http.createServer((req, res) => {
   if (req.url === "/") {
     res.writeHead(200, { "Content-Type": "text/html" });
-    const html = fs.readFileSync("www/index.html", "utf-8");
+    const html = fs.readFileSync("index.html", "utf-8");
     res.end(html);
   } else {
     res.writeHead(200, { "Content-Type": "text/html" });
-    const html = fs.readFileSync("www/index.html", "utf-8");
+    const html = fs.readFileSync("index.html", "utf-8");
     res.end(html);
   }
 });
@@ -27,7 +27,7 @@ wss.on("connection", (ws) => {
       JSON.stringify({
         event_type: "state_changed",
         data: {
-          entity_id: "sensor.new_sensor",
+          entity_id: "sensor.energie_prijzen_CS",
           new_state: {
             attributes: {
               friendly_name: entityName,
