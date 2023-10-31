@@ -37,6 +37,9 @@ perform_api_request() {
     echo "Entiteit $ENTITY_ID bijgewerkt naar $REMOTE_DATA"
 }
 
+mkdir www
+chmod 777 www
+
 # Maak een eenvoudige HTML-pagina met de entiteitswaarde
 cat <<EOF > /www/index.html
 <!DOCTYPE html>
@@ -57,7 +60,7 @@ echo "error_log /dev/stdout info;" >> /etc/nginx/nginx.conf
 # Maak een Nginx-configuratiebestand voor de webpagina
 cat <<EOF > /etc/nginx/conf.d/default.conf
 server {
-    listen       80;
+    listen       8099;
     server_name  localhost;
 
     location / {
