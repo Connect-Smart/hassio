@@ -10,7 +10,7 @@
   <script>
     const statusElement = document.getElementById("status");
 
-    const socket = new WebSocket("ws://localhost:8099");
+    const socket = new WebSocket("ws://localhost:8080");
 
     socket.onopen = (event) => {
       console.log("WebSocket connection opened");
