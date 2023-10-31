@@ -1,16 +1,35 @@
 {
-  "name": "My WebSocket Webserver Add-on",
+  "name": "API Connect-Smart",
   "version": "1.0.0",
-  "slug": "my_ws_webserver_addon",
-  "description": "WebSocket webserver add-on for Home Assistant",
-  "arch": ["armhf", "aarch64", "amd64"],
+  "slug": "api_connect_smart",
+  "description": "API Connect-Smart",
+  "url": "https://github.com/Connect-Smart/hassio/tree/main/api_connect",
+  "arch": ["armv7", "armhf", "amd64", "aarch64", "i386"],
   "startup": "before",
+  "init": false,
   "boot": "auto",
+  "host_network": true,
+  "homeassistant": "/config",
+  "ingress": true,
+  "ingress_port": 8099,
+  "ingress_panel": true,
+  "ingress_url": "/admin",
+  "ingress_entry": "admin",
+  "ingress_category": "config",
+  "ingress_domain": "your_addon_domain",
   "options": {
-    "privileged": true
+    "privileged": true,
+    "token": "",
+    "entity": "",
+    "apikey": ""
+  },
+  "schema": {
+    "token": "str",
+    "entity": "str",
+    "apikey": "str"
   },
   "ports": {
-    "8080/tcp": 8099
+    "8099/tcp": 8099
   },
   "webui": "http://localhost:8099"
 }
