@@ -50,8 +50,6 @@ cat <<EOF > /www/index.html
 </html>
 EOF
 
-# Installeer een eenvoudige webserver zoals Nginx
-apk add nginx
 
 # Configureer de webserver
 echo "daemon off;" >> /etc/nginx/nginx.conf
