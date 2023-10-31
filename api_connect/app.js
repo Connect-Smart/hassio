@@ -9,11 +9,9 @@ const ENTITY_ID = 'sensor.example_sensor'; // Vervang dit door de entiteit die j
 const server = http.createServer((req, res) => {
   const { pathname } = url.parse(req.url, true);
 
-  if (pathname === '/') {
     const filePath = path.join(__dirname, 'index.html');
     const readStream = fs.createReadStream(filePath);
     readStream.pipe(res);
-  }
 });
 
 const wss = new WebSocket.Server({ server });
