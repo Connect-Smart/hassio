@@ -12,6 +12,8 @@ INTERVAL=5  # Tijd in seconden tussen elk API-verzoek
 NEW_VALUE="0"
 PAGE_CONTENT="<!DOCTYPE html><html><head><title>Entity Viewer</title></head><body><h1>Entity Viewer</h1><p>Entity: $ENTITY_ID</p><iframe src=\"$HA_HOST/lovelace/0\" width=\"800\" height=\"600\"></iframe></body></html>"
 # Start een eenvoudige webserver om de pagina weer te geven
+mkdir www
+chmod 777 www
 echo -e "$PAGE_CONTENT" > /www/index.html
 
 # Instellingen
