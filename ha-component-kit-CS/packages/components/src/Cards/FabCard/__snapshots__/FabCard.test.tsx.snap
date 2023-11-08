@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FabCard /> renders FabCard 1`] = `
+.emotion-0 {
+  all: unset;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 50%;
+  background-color: var(--ha-secondary-background);
+  color: var(--ha-300);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  -webkit-transition: var(--ha-transition-duration) var(--ha-easing);
+  transition: var(--ha-transition-duration) var(--ha-easing);
+  transition-property: background-color,box-shadow;
+  font-size: 0.7rem;
+  height: 48px;
+  width: 48px;
+}
+
+.emotion-0:hover {
+  background-color: var(--ha-secondary-background-hover);
+}
+
+<button
+  class="emotion-0"
+  data-testid="fab-card"
+  size="48"
+  style="opacity: 1;"
+>
+  <span />
+</button>
+`;

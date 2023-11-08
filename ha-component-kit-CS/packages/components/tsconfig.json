@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "skipLibCheck": true,
+  },
+  "rootDir": "./src",
+  "include": ["src", "../../.d.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

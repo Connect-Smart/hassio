@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "useDefineForClassFields": true,
+    "lib": ["es2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "emitDeclarationOnly": false,
+    "isolatedModules": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "declaration": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "preserveConstEnums": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@hakit/core": ["packages/core/dist"],
+      "@hakit/components": ["packages/components/dist"],
+      "@core": ["packages/core/src"],
+      "@components": ["packages/components/src"],
+      "@stories/*": ["stories/*"],
+      "@hass-connect-fake": ["hass-connect-fake/index.tsx"],
+      "@hass-connect-fake/*": ["hass-connect-fake/*"],
+      "@hooks": ["packages/core/src/hooks"],
+      "@utils/*": ["packages/core/src/utils/*"],
+      "@typings": ["packages/core/src/types"],
+      "@mocks/*": ["hass-connect-fake/mocks/*"]
+    }
+  },
+  "include": ["./stories", "./hass-connect-fake", ".d.ts"],
+  "exclude": ["**/*./", "**/node_modules"]
+}
