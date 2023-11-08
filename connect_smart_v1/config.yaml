@@ -15,10 +15,6 @@ options: {}
 schema: {}
 ports:
   "8080/tcp": 8080
-panel: true
-panel_title: "test"
-panel_icon: mdi:web
-panel_admin: true
 ingress: true
 ingress_port: 8080,
 ingress_panel: true,
@@ -26,4 +22,3 @@ ingress_url: "/connect_smart_v1"
 ingress_entry: "admin"
 ingress_category: "config"
 ingress_domain: "connect_smart_v1"
-ingress_stream: true
