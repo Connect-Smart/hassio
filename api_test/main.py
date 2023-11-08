@@ -16,7 +16,7 @@ async def get_entity_status(request):
 app = web.Application()
 app.router.add_get('/get_entity_status', get_entity_status)
 
-web.run_app(app, host='0.0.0.0', port=8099)
+web.run_app(app, host='0.0.0.0', port=8098)
 
 
 def generate_bashio_token():

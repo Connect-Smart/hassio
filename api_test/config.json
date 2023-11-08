@@ -6,14 +6,17 @@
     "arch": ["armhf", "armv7", "amd64"],
     "startup": "before",
     "boot": "auto",
-    "webui": "https://localhost:8099",
+    "webui": "https://localhost:8098",
     "options": {},
-    "ingress": [
-        {
-            "entry": "webui",
-            "title": "My Entity Status",
-            "url": "my-entity-status"
-        }
-    ]
+    "ingress": true,
+    "ingress_port": 8098,
+    "ingress_panel": true,
+    "ingress_url": "/api_connect_smart",
+    "ingress_entry": "admin",
+    "ingress_category": "config",
+    "ingress_domain": "api_connect_smart",
+    "ports": {
+        "8099/tcp": 8098
+    }
 }
   
