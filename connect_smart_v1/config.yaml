@@ -15,6 +15,4 @@ schema: {}
 ports:
   "8080/tcp": 8080
 panel: true  
-python_packages:
-  - requests==2.25.1
-  - Flask==1.1.2
+
