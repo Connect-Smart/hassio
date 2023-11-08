@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Entity Status</title>
+</head>
+<body>
+    <h1>Entity Status</h1>
+
+    <div id="status-container">
+        Loading...
+    </div>
+
+    <script>
+        // Haal de status van de entiteit op via een HTTP-verzoek naar je API-endpoint
+        fetch('/get_entity_status')
+            .then(response => response.json())
+            .then(data => {
+                // Toon de status op de webpagina
+                const statusContainer = document.getElementById('status-container');
+                statusContainer.innerHTML = `Status: ${data.status}`;
+            })
+            .catch(error => {
+                console.error('Fout bij het ophalen van de status: ', error);
+                const statusContainer = document.getElementById('status-container');
+                statusContainer.innerHTML = 'Er is een fout opgetreden bij het ophalen van de status.';
+            });
+    </script>
+</body>
+</html>

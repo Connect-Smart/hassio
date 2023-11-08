@@ -1,0 +1,19 @@
+{
+    "name": "My Entity Status",
+    "slug": "my-entity-status",
+    "description": "Show the status of a Home Assistant entity using Supervisor API",
+    "version": "1.0.0",
+    "arch": ["armhf", "armv7", "amd64"],
+    "startup": "before",
+    "boot": "auto",
+    "webui": "https://localhost:8099",
+    "options": {},
+    "ingress": [
+        {
+            "entry": "webui",
+            "title": "My Entity Status",
+            "url": "my-entity-status"
+        }
+    ]
+}
+  
