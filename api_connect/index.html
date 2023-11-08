@@ -8,7 +8,7 @@
   <div id="status">Status: Wachten op updates...</div>
 
   <script>
-    const ws = new WebSocket('ws://10.0.0.20:8099');
+    const ws = new WebSocket('wss://10.0.0.20:8099');
 
     ws.addEventListener('message', (event) => {
       const data = JSON.parse(event.data);
