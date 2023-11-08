@@ -8,10 +8,10 @@ FROM $BUILD_FROM
 FROM python:3.9-slim
 
 # Kopieer de Python requirements file
-COPY requirements.txt /requirements.txt
+#COPY requirements.txt /requirements.txt
 
 # Installeer Python dependencies
-RUN pip install --no-cache-dir -r /requirements.txt
+#RUN pip install --no-cache-dir -r /requirements.txt
 
 # Kopieer root filesystem
 COPY rootfs /

@@ -2,6 +2,7 @@ name: "Connect-Smart V1"
 version: "0.1"
 slug: "connect_smart_v1"
 description: "Dit is versie 1."
+homeassistant_api: true
 arch:
   - aarch64
   - amd64
@@ -14,5 +15,7 @@ options: {}
 schema: {}
 ports:
   "8080/tcp": 8080
-panel: true  
-
+panel: true
+panel_title: "test"
+panel_icon: mdi:web
+panel_admin: true
