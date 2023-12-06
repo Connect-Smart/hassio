@@ -5,20 +5,17 @@ from datetime import datetime, timedelta
 import schedule
 import time
 
-import json
+import sys
 
-# Specify the path to your add-on's configuration directory
-config_path = "/config"
+# The configuration is passed as a JSON string through the first command line argument
+config_str = sys.argv[1]
 
-# Read the contents of the config.json file
-with open(f"{config_path}/config.json", "r") as config_file:
-    config_data = json.load(config_file)
+# Parse the JSON string to get a Python dictionary
+config = json.loads(config_str)
 
-# Now, you can access the configuration settings
-setting_value = config_data.get("setting_key")
+# Access specific configuration options
+option_value = config.get("option_name")
 
-# Use the setting value in your script
-print(f"Setting Value: {setting_value}")
 
 
 
