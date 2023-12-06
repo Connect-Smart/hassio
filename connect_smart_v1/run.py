@@ -2,12 +2,17 @@ import os
 import requests
 from flask import Flask, jsonify
 from datetime import datetime, timedelta
+import schedule
+import time
 
 app = Flask(__name__)
 
 # Gebruik het interne token verkregen door de supervisor
 HASS_TOKEN = os.getenv("SUPERVISOR_TOKEN")
 HASS_API = "http://supervisor/core/api"
+
+AUTOMATION_CHEAPEST = os.getenv("cheapest_energy_automation")
+AUTOMATION_EXPENSIVE = os.getenv("most_expensive_energy_automation")
 
 API_USERNAME = os.getenv("username")
 API_PASSWORD = os.getenv("password")
@@ -87,12 +92,30 @@ def get_energy_data():
         cheapest_time, most_expensive_time = extract_times(energy_data)
         cheapest_trigger, expensive_trigger = save_times_to_home_assistant(cheapest_time, most_expensive_time)
 
-        create_automation(cheapest_trigger, "Cheapest Energy Automation", "automation.cheapest_energy")
-        create_automation(expensive_trigger, "Most Expensive Energy Automation", "automation.most_expensive_energy")
+        create_automation(cheapest_trigger, "Cheapest Energy Automation", AUTOMATION_CHEAPEST)
+        create_automation(expensive_trigger, "Most Expensive Energy Automation", AUTOMATION_EXPENSIVE)
 
         return "Data and automations updated successfully.", 200
     else:
         return "Failed to fetch energy data.", 500
+
+def job():
+    print("Executing script...")
+    energy_data = fetch_energy_data()
+
+    if energy_data:
+        cheapest_time, most_expensive_time = extract_times(energy_data)
+        cheapest_trigger, expensive_trigger = save_times_to_home_assistant(cheapest_time, most_expensive_time)
+
+        create_automation(cheapest_trigger, "Cheapest Energy Automation", AUTOMATION_CHEAPEST)
+        create_automation(expensive_trigger, "Most Expensive Energy Automation", AUTOMATION_EXPENSIVE)
+
+        print("Data and automations updated successfully.")
+    else:
+        print("Failed to fetch energy data.")
+
+# Plan de taak om elke dag om 3:00 uit te voeren
+schedule.every().day.at("17:15").do(job)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
