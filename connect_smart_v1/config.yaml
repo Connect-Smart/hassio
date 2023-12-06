@@ -29,6 +29,7 @@ map:
   - addon_config:rw
 ports:
   "8080/tcp": 8080
+config: true
 ingress: true
 ingress_port: 8080
 ingress_panel: true
