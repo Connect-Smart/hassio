@@ -19,9 +19,7 @@ headers = {
 }
 
 def login_to_website(username, password):
-    # Hier implementeer je de logica om in te loggen op de website
-    # Vervang de onderstaande code door de echte inloglogica van de website
-    login_url = "https://voorbeeld-website.com/login"
+    login_url = "https://voxip.nl/api/"
     login_data = {"username": username, "password": password}
 
     response = requests.post(login_url, data=login_data)
