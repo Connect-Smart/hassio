@@ -72,7 +72,7 @@ def get_energy_data():
     if energy_data:
         cheapest_time, most_expensive_time = extract_times(energy_data)
         save_times_to_home_assistant(cheapest_time, most_expensive_time)
-        create_automation(cheapest_time, most_expensive_time)
+        #create_automation(cheapest_time, most_expensive_time)
         return "Data updated successfully.", 200
     else:
         return "Failed to fetch energy data.", 500
