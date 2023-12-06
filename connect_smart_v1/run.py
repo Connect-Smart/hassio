@@ -5,7 +5,22 @@ from datetime import datetime, timedelta
 import schedule
 import time
 
-print("\n",os.environ,"\n")
+config_path = os.path.join(os.path.dirname(__file__), "config.json")
+
+# Controleer of het configuratiebestand bestaat
+if os.path.exists(config_path):
+    # Lees de inhoud van het configuratiebestand
+    with open(config_path, "r") as file:
+        config_data = json.load(file)
+
+    # Nu kun je toegang krijgen tot de configuratievariabelen
+    if "entries" in config_data:
+        entries = config_data["entries"]
+        print("Configuratie-entries gevonden:", entries)
+    else:
+        print("Configuratie-entries niet gevonden in het configuratiebestand.")
+else:
+    print("Configuratiebestand niet gevonden op het verwachte pad:", config_path)
 
 app = Flask(__name__)
 
