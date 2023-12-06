@@ -53,7 +53,7 @@ def update_entity(entity_id, state):
     return response.ok
 
 def create_automation(cheapest_time, most_expensive_time):
-    automation_entity_id = "SC_energy_scheduler"
+    automation_entity_id = "automation.SC_energy_scheduler"
 
     automation_data = {
         "entity_id": automation_entity_id,
