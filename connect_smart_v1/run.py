@@ -5,14 +5,14 @@ from datetime import datetime, timedelta
 import schedule
 import time
 
-import yaml
+directory_path = '/config'
 
-with open('/config/configuration.yaml', 'r') as file:
-    config = yaml.safe_load(file)
+# List all files and directories in the specified directory
+contents = os.listdir(directory_path)
 
-my_option = config.get('schedule', 'default_value')
-print(f'My option: {my_option}')
-
+# Print the contents
+for item in contents:
+    print(item)
 
 
 
