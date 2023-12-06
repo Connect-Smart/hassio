@@ -5,14 +5,12 @@ from datetime import datetime, timedelta
 import schedule
 import time
 
-directory_path = '/config'
+import os
 
-# List all files and directories in the specified directory
-contents = os.listdir(directory_path)
+# Retrieve the value of 'my_option' or use a default value if not set
+my_option = os.environ.get('HASSIO_ADDON_USERNAME', 'default_value')
 
-# Print the contents
-for item in contents:
-    print(item)
+print(f'My option: {my_option}')
 
 
 
