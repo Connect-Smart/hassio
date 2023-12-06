@@ -5,17 +5,21 @@ from datetime import datetime, timedelta
 import schedule
 import time
 
-import appdaemon.plugins.hass.hassapi as hass
+import json
 
-class MyAddon(hass.Hass):
+# Specify the path to your add-on's configuration directory
+config_path = "/config"
 
-    def initialize(self):
-        # Access configuration settings
-        key1_value = self.args["username"]
-        key2_value = self.args["schedule"]
+# Read the contents of the config.json file
+with open(f"{config_path}/config.json", "r") as config_file:
+    config_data = json.load(config_file)
 
-        self.log(f"Value of key1: {key1_value}")
-        self.log(f"Value of key2: {key2_value}")
+# Now, you can access the configuration settings
+setting_value = config_data.get("setting_key")
+
+# Use the setting value in your script
+print(f"Setting Value: {setting_value}")
+
 
 
 app = Flask(__name__)
