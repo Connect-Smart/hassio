@@ -99,23 +99,20 @@ def get_energy_data():
     else:
         return "Failed to fetch energy data.", 500
 
-def job():
-    print("Executing script...")
-    energy_data = fetch_energy_data()
+schedule.every().day.at("17:30").do(get_energy_data)
 
-    if energy_data:
-        cheapest_time, most_expensive_time = extract_times(energy_data)
-        cheapest_trigger, expensive_trigger = save_times_to_home_assistant(cheapest_time, most_expensive_time)
+def run_scheduled_job():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
-        create_automation(cheapest_trigger, "Cheapest Energy Automation", AUTOMATION_CHEAPEST)
-        create_automation(expensive_trigger, "Most Expensive Energy Automation", AUTOMATION_EXPENSIVE)
-
-        print("Data and automations updated successfully.")
-    else:
-        print("Failed to fetch energy data.")
-
-# Plan de taak om elke dag om 3:00 uit te voeren
-schedule.every().day.at("17:25").do(job)
+# Rest van je code blijft hetzelfde...
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    # Start de Flask-app in een aparte thread
+    import threading
+    flask_thread = threading.Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 8080})
+    flask_thread.start()
+
+    # Start de geplande job in de hoofdthread
+    run_scheduled_job()
