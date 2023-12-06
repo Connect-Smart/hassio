@@ -5,11 +5,8 @@ from datetime import datetime, timedelta
 import schedule
 import time
 
-# Retrieve the value of 'my_option' or use a default value if not set
-my_option = os.environ.get('HASSIO_ADDON_USERNAME', 'default_value')
-
-print(f'My option: {my_option}')
-
+for name, value in os.environ.items():
+    print("{0}: {1}".format(name, value))
 
 
 app = Flask(__name__)
