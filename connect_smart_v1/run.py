@@ -22,7 +22,7 @@ def get_external_data():
     
     if response.ok:
         # Hier kun je de logica aanpassen om de benodigde gegevens uit de website te halen
-        login_data = {"username": username, "password": password}
+        login_data = {"username": WEBSITE_USERNAME, "password": WEBSITE_PASSWORD}
         external_data = requests.post(url, json=login_data)
         return external_data
     else:
