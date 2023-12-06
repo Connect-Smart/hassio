@@ -5,22 +5,18 @@ from datetime import datetime, timedelta
 import schedule
 import time
 
-config_path = os.path.join(os.path.dirname(__file__), "config.json")
+import appdaemon.plugins.hass.hassapi as hass
 
-# Controleer of het configuratiebestand bestaat
-if os.path.exists(config_path):
-    # Lees de inhoud van het configuratiebestand
-    with open(config_path, "r") as file:
-        config_data = json.load(file)
+class MyAddon(hass.Hass):
 
-    # Nu kun je toegang krijgen tot de configuratievariabelen
-    if "entries" in config_data:
-        entries = config_data["entries"]
-        print("Configuratie-entries gevonden:", entries)
-    else:
-        print("Configuratie-entries niet gevonden in het configuratiebestand.")
-else:
-    print("Configuratiebestand niet gevonden op het verwachte pad:", config_path)
+    def initialize(self):
+        # Access configuration settings
+        key1_value = self.args["username"]
+        key2_value = self.args["schedule"]
+
+        self.log(f"Value of key1: {key1_value}")
+        self.log(f"Value of key2: {key2_value}")
+
 
 app = Flask(__name__)
 
