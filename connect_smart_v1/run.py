@@ -5,20 +5,24 @@ from datetime import datetime, timedelta
 import schedule
 import time
 
-
-from homeassistant import config_entries
+import asyncio
 
 async def get_all_config_entries(hass):
     # Get all config entries
-    entries = hass.config_entries.async_entries()
+    config_entries = hass.config_entries.async_entries()
 
-    # Now 'entries' contains a list of all config entries
-    for entry in entries:
-        print(f"Entry ID: {entry.entry_id}, Title: {entry.title}")
+    # Print or process the config entries
+    for entry in config_entries:
+        print(f"Config Entry ID: {entry.entry_id}")
+        print(f"Config Entry Title: {entry.title}")
+        print(f"Config Entry Domain: {entry.domain}")
+        print(f"Config Entry Data: {entry.data}")
+        print(f"Config Entry Options: {entry.options}")
+        print("------------------------------------")
 
-# Example usage in an async function
-async def example_usage(hass):
-    await hass.async_add_executor_job(get_all_config_entries, hass)
+# Example usage
+asyncio.run(get_all_config_entries(hass))
+
 
 
 
