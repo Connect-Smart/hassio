@@ -7,34 +7,28 @@ app = Flask(__name__)
 # Gebruik het interne token verkregen door de supervisor
 HASS_TOKEN = os.getenv("SUPERVISOR_TOKEN")
 HASS_API = "http://supervisor/core/api"
-TEST_SENSOR_ENTITY_ID = "sensor.test_sensor"
-WEBSITE_USERNAME = os.getenv("username")
-WEBSITE_PASSWORD = os.getenv("password")
+
+# Instellingen voor de inloggegevens van de website
+username = os.getenv("username")
+password = os.getenv("password")
 
 headers = {
     "Authorization": f"Bearer {HASS_TOKEN}",
     "Content-Type": "application/json",
 }
 
-def get_external_data():
-    website_url = "https://voxip.nl/api/"
-    response = requests.get(website_url)
-    
-    if response.ok:
-        # Hier kun je de logica aanpassen om de benodigde gegevens uit de website te halen
-        login_data = {"username": WEBSITE_USERNAME, "password": WEBSITE_PASSWORD}
-        external_data = requests.post(website_url, json=login_data)
-        return external_data
-    else:
-        return None
+def login_to_website(username, password):
+    # Hier implementeer je de logica om in te loggen op de website
+    # Vervang de onderstaande code door de echte inloglogica van de website
+    login_url = "https://voxip.nl/api"
+    login_data = {"username": username, "password": password}
 
-def update_test_sensor(value):
-    url = f"{HASS_API}/states/{TEST_SENSOR_ENTITY_ID}"
-    data = {"state": value}
-    
-    response = requests.post(url, headers=headers, json=data)
-    
-    return response.ok
+    response = requests.post(login_url, data=login_data)
+
+    if response.ok:
+        return True
+    else:
+        return False
 
 @app.route('/toggle-switch', methods=['POST'])
 def toggle_switch():
@@ -51,17 +45,26 @@ def toggle_switch():
 
 @app.route('/admin', methods=['GET'])
 def get_test_sensor():
-    # Haal gegevens van de externe website
-    external_data = get_external_data()
+    entity_id = "sensor.test_sensor"
     
-    if external_data is not None:
-        # Update de test sensor met de externe gegevens
-        if update_test_sensor(external_data['desired_value']):
-            return jsonify({"message": "Test sensor updated successfully"}), 200
+    # Inloggen op de website
+    if login_to_website(WEBSITE_USERNAME, WEBSITE_PASSWORD):
+        # Hier implementeer je de logica om gegevens van de website te halen
+        # Vervang de onderstaande code door de echte logica om gegevens van de website te halen
+        website_data = {"temperature": 25.0, "humidity": 50.0}
+
+        # Bijwerken van de test sensor met gegevens van de website
+        update_url = f"{HASS_API}/states/{entity_id}"
+        update_data = website_data
+
+        response = requests.post(update_url, headers=headers, json=update_data)
+
+        if response.ok:
+            return "Test sensor updated!", 200
         else:
             return "Failed to update test sensor.", 500
     else:
-        return "Failed to retrieve external data.", 500
+        return "Failed to login to the website.", 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
