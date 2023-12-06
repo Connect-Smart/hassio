@@ -39,8 +39,8 @@ def save_times_to_home_assistant(cheapest_time, most_expensive_time):
     expensive_entity_id = "sensor.expensive_energy_time"
 
     # Format times as HH:MM
-    cheapest_time_str = datetime.strptime(cheapest_time, "%Y-%m-%dT%H:%M:%S").strftime("%H:%M")
-    most_expensive_time_str = datetime.strptime(most_expensive_time, "%Y-%m-%dT%H:%M:%S").strftime("%H:%M")
+    cheapest_time_str = datetime.strptime(cheapest_time, "%Y-%m-%d %H:%M:%S").strftime("%H:%M")
+    most_expensive_time_str = datetime.strptime(most_expensive_time, "%Y-%m-%d %H:%M:%S").strftime("%H:%M")
 
     # Update entities in Home Assistant
     update_entity(cheapest_entity_id, cheapest_time_str)
