@@ -5,6 +5,8 @@ from datetime import datetime, timedelta
 import schedule
 import time
 
+print("\n",os.environ,"\n")
+
 app = Flask(__name__)
 
 # Gebruik het interne token verkregen door de supervisor
