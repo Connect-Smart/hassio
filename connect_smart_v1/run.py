@@ -13,7 +13,7 @@ HASS_API = "http://supervisor/core/api"
 
 AUTOMATION_CHEAPEST = os.getenv("cheapest_energy_automation")
 AUTOMATION_EXPENSIVE = os.getenv("most_expensive_energy_automation")
-SCHEDULE = os.getenv("schedule", "17:51:12")
+SCHEDULE = os.getenv("schedule")
 print(f"De waarde van mijn_var is: {SCHEDULE}")
 
 
