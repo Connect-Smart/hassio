@@ -5,8 +5,21 @@ from datetime import datetime, timedelta
 import schedule
 import time
 
-for name, value in os.environ.items():
-    print("{0}: {1}".format(name, value))
+
+from homeassistant import config_entries
+
+async def get_all_config_entries(hass):
+    # Get all config entries
+    entries = hass.config_entries.async_entries()
+
+    # Now 'entries' contains a list of all config entries
+    for entry in entries:
+        print(f"Entry ID: {entry.entry_id}, Title: {entry.title}")
+
+# Example usage in an async function
+async def example_usage(hass):
+    await hass.async_add_executor_job(get_all_config_entries, hass)
+
 
 
 app = Flask(__name__)
