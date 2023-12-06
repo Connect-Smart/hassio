@@ -9,8 +9,8 @@ HASS_TOKEN = os.getenv("SUPERVISOR_TOKEN")
 HASS_API = "http://supervisor/core/api"
 
 # Instellingen voor de inloggegevens van de website
-username = os.getenv("username")
-password = os.getenv("password")
+WEBSITE_USERNAME = os.getenv("username")
+WEBSITE_PASSWORD = os.getenv("password")
 
 headers = {
     "Authorization": f"Bearer {HASS_TOKEN}",
