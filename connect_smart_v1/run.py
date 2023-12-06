@@ -115,7 +115,7 @@ def job():
         print("Failed to fetch energy data.")
 
 # Plan de taak om elke dag om 3:00 uit te voeren
-schedule.every().day.at("17:20").do(job)
+schedule.every().day.at("17:25").do(job)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
