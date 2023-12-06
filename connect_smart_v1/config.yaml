@@ -12,8 +12,8 @@ arch:
 startup: "application"
 boot: "auto"
 options:
-  "username": "Connect-Smart"
-  "password": ""
+  username: "Connect-Smart"
+  password: ""
 schema:
   username: str
   password: password
