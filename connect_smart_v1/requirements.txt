@@ -1,5 +1,3 @@
 Flask
 requests
-Flask
-jsonify
 bs4
