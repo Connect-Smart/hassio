@@ -27,7 +27,7 @@ schema:
   most_expensive_energy_automation:
     - str
   schedule:
-    - time
+    - str
 map:
   - addons:rw
 schema: {}
