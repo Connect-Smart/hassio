@@ -21,7 +21,7 @@ headers = {
 def get_website_data():
     login_data = {"username": API_USERNAME, "password": API_PASSWORD}
     website_data_url = "https://voxip.nl/api"
-    response = website_session.get(website_data_url, data=login_data)
+    response = requests.get(website_data_url, data=login_data)
     
     if response.ok:
         return response.json()
