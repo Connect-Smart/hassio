@@ -8,7 +8,7 @@ import time
 import json
 
 # Specify the path to your add-on's configuration directory
-config_path = "/data"
+config_path = "/config"
 
 # Read the contents of the config.json file
 with open(f"{config_path}/config.json", "r") as config_file:
