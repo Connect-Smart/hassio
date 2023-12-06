@@ -102,7 +102,7 @@ def get_energy_data():
     else:
         return "Failed to fetch energy data.", 500
 
-schedule.every().day.at({SCHEDULE}).do(get_energy_data)
+schedule.every().day.at("{SCHEDULE}").do(get_energy_data)
 
 def run_scheduled_job():
     print("Executing Schedule")
