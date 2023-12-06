@@ -14,9 +14,17 @@ boot: "auto"
 options:
   username: "Connect-Smart"
   password: ""
+  cheapest_energy_automation: ""
+  most_expensive_energy_automation: ""
 schema:
-  username: str
-  password: password
+  username:
+    - str
+  password:
+    - password
+  cheapest_energy_automation:
+    - str
+  most_expensive_energy_automation:
+    - str
 map:
   - addons:rw
 schema: {}
