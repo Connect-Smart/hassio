@@ -5,8 +5,6 @@ from datetime import datetime, timedelta
 import schedule
 import time
 
-import os
-
 # Retrieve the value of 'my_option' or use a default value if not set
 my_option = os.environ.get('HASSIO_ADDON_USERNAME', 'default_value')
 
