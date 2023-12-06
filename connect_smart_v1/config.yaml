@@ -24,6 +24,7 @@ schema:
   most_expensive_energy_automation: "str"
   schedule: "str"
 map:
+  - config:rw
   - addons:rw
   - addon_config:rw
 ports:
