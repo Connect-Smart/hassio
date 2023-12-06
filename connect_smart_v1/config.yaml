@@ -18,16 +18,11 @@ options:
   most_expensive_energy_automation: ""
   schedule: "17:35:21"
 schema:
-  username:
-    - str
-  password:
-    - password
-  cheapest_energy_automation:
-    - str
-  most_expensive_energy_automation:
-    - str
-  schedule:
-    - str
+  username: "str"
+  password: "password"
+  cheapest_energy_automation: "str"
+  most_expensive_energy_automation: "str"
+  schedule: "str"
 map:
   - addons:rw
 schema: {}
