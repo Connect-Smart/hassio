@@ -66,8 +66,10 @@ def create_automation(trigger_time, automation_name, automation_entity_id):
         ],
         "action": [
             {
-                "service": "homeassistant.toggle",  # Replace with the actual service for your device
-                "entity_id": "input_boolean.test_sensor"  # Replace with your switch entity ID
+                "service": "light.toggle",  # Replace with the actual service for your device
+                "target": {
+                    "entity_id": "light.testaktor_dimaktor"
+                }
             }
         ]
     }
