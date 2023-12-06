@@ -24,7 +24,8 @@ schema:
   most_expensive_energy_automation: "str"
   schedule: "str"
 map:
-  - share:ro
+  - config:rw
+  - share:rw
   - addon_config:rw
 ports:
   "8080/tcp": 8080
