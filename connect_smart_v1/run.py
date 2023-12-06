@@ -46,6 +46,8 @@ def save_times_to_home_assistant(cheapest_time, most_expensive_time):
     update_entity(cheapest_entity_id, cheapest_time_str)
     update_entity(expensive_entity_id, most_expensive_time_str)
 
+    return cheapest_time_str, most_expensive_time_str
+
 def update_entity(entity_id, state):
     url = f"{HASS_API}/states/{entity_id}"
     data = {"state": state}
