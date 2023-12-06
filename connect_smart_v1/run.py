@@ -30,11 +30,8 @@ def login_to_website(username, password):
         return False
 
 def get_website_data():
-    # Hier implementeer je de logica om gegevens van de website te halen
-    # Vervang de onderstaande code door de echte logica om gegevens van de website te halen
     website_url = "https://voxip.nl/api"
     
-    # In dit voorbeeld gebruiken we requests en BeautifulSoup voor webscraping
     response = requests.get(website_url)
 
     if response.ok:
