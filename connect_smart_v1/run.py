@@ -14,6 +14,9 @@ HASS_API = "http://supervisor/core/api"
 AUTOMATION_CHEAPEST = os.getenv("cheapest_energy_automation")
 AUTOMATION_EXPENSIVE = os.getenv("most_expensive_energy_automation")
 SCHEDULE = os.getenv("schedule", "17:51:12")
+print(f"De waarde van mijn_var is: {SCHEDULE}")
+SCHEDULE = os.environ("schedule", "17:51:12")
+print(f"De waarde van mijn_var is: {SCHEDULE}")
 
 API_USERNAME = os.getenv("username")
 API_PASSWORD = os.getenv("password")
@@ -100,7 +103,7 @@ def get_energy_data():
     else:
         return "Failed to fetch energy data.", 500
 
-schedule.every().day.at(SCHEDULE).do(get_energy_data)
+schedule.every().day.at({SCHEDULE}).do(get_energy_data)
 
 def run_scheduled_job():
     print("Executing Schedule")
