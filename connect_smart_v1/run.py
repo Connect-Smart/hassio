@@ -52,15 +52,25 @@ def update_entity(entity_id, state):
     response = requests.post(url, headers=headers, json=data)
     return response.ok
 
-def create_automation(cheapest_time, most_expensive_time):
-    automation_entity_id = "automation.SC_energy_scheduler"
-
+def create_automation(trigger_time, automation_name, automation_entity_id):
+    # Create automation in Home Assistant
     automation_data = {
-        "entity_id": automation_entity_id,
-        "at": [cheapest_time, most_expensive_time]
+        "name": automation_name,
+        "trigger": [
+            {
+                "platform": "time",
+                "at": trigger_time
+            }
+        ],
+        "action": [
+            {
+                "service": "switch.toggle",  # Replace with the actual service for your device
+                "entity_id": "switch.jouw_switch_entity_id"  # Replace with your switch entity ID
+            }
+        ]
     }
 
-    url = f"{HASS_API}/services/automation/trigger"
+    url = f"{HASS_API}/config/automation/create"
     response = requests.post(url, headers=headers, json=automation_data)
 
     return response.ok
@@ -71,12 +81,14 @@ def get_energy_data():
 
     if energy_data:
         cheapest_time, most_expensive_time = extract_times(energy_data)
-        save_times_to_home_assistant(cheapest_time, most_expensive_time)
-        create_automation(cheapest_time, most_expensive_time)
-        return "Data updated successfully.", 200
+        cheapest_trigger, expensive_trigger = save_times_to_home_assistant(cheapest_time, most_expensive_time)
+
+        create_automation(cheapest_trigger, "Cheapest Energy Automation", "automation.cheapest_energy")
+        create_automation(expensive_trigger, "Most Expensive Energy Automation", "automation.most_expensive_energy")
+
+        return "Data and automations updated successfully.", 200
     else:
         return "Failed to fetch energy data.", 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
-
