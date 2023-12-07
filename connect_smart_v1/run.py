@@ -5,23 +5,20 @@ from datetime import datetime, timedelta
 import schedule
 import time
 
-import asyncio
+import yaml
 
-async def get_all_config_entries(hass):
-    # Get all config entries
-    config_entries = hass.config_entries.async_entries()
+# Get the path to the configuration directory
+config_dir = os.path.join(os.path.expanduser("~"), ".homeassistant")
 
-    # Print or process the config entries
-    for entry in config_entries:
-        print(f"Config Entry ID: {entry.entry_id}")
-        print(f"Config Entry Title: {entry.title}")
-        print(f"Config Entry Domain: {entry.domain}")
-        print(f"Config Entry Data: {entry.data}")
-        print(f"Config Entry Options: {entry.options}")
-        print("------------------------------------")
+# Specify the path to the config.yaml file
+config_file_path = os.path.join(config_dir, "configuration.yaml")
 
-# Example usage
-asyncio.run(get_all_config_entries(hass))
+# Read the contents of the config.yaml file
+with open(config_file_path, "r") as config_file:
+    config_data = yaml.safe_load(config_file)
+
+# Now, config_data contains the parsed contents of the configuration.yaml file
+print(config_data)
 
 
 
