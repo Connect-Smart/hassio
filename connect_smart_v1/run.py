@@ -2,8 +2,6 @@ import os
 import requests
 from flask import Flask, jsonify
 from datetime import datetime, timedelta
-import schedule
-import time
 
 app = Flask(__name__)
 
@@ -13,8 +11,7 @@ HASS_API = "http://supervisor/core/api"
 
 AUTOMATION_CHEAPEST = os.getenv("cheapest_energy_automation")
 AUTOMATION_EXPENSIVE = os.getenv("most_expensive_energy_automation")
-SCHEDULE = os.getenv("schedule")
-print(f"De waarde van mijn_var is: {SCHEDULE}")
+
 
 
 API_USERNAME = os.getenv("username")
@@ -102,15 +99,6 @@ def get_energy_data():
     else:
         return "Failed to fetch energy data.", 500
 
-schedule.every().day.at(str(SCHEDULE)).do(get_energy_data)
-
-def run_scheduled_job():
-    print("Executing Schedule")
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
-
-# Rest van je code blijft hetzelfde...
 
 if __name__ == '__main__':
     # Start de Flask-app in een aparte thread
