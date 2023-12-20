@@ -5,24 +5,6 @@ from datetime import datetime, timedelta
 import schedule
 import time
 
-import yaml
-
-# Get the path to the configuration directory
-config_dir = os.path.join(os.path.expanduser("~"), ".homeassistant")
-
-# Specify the path to the config.yaml file
-config_file_path = os.path.join(config_dir, "configuration.yaml")
-
-# Read the contents of the config.yaml file
-with open(config_file_path, "r") as config_file:
-    config_data = yaml.safe_load(config_file)
-
-# Now, config_data contains the parsed contents of the configuration.yaml file
-print(config_data)
-
-
-
-
 app = Flask(__name__)
 
 # Gebruik het interne token verkregen door de supervisor
