@@ -1,7 +1,7 @@
 name: "Connect-Smart V1"
 version: "0.1"
 slug: "connect_smart_v1"
-description: "Dit is versie 1."
+description: "Dit is versie 1"
 homeassistant_api: true
 arch:
   - aarch64
@@ -33,6 +33,7 @@ ingress: true
 ingress_port: 8080
 ingress_panel: true
 ingress_url: "/connect_smart_v1"
-ingress_entry: "admin"
-ingress_category: "config"
-ingress_domain: "connect_smart_v1"
+ingress_category: addon
+#ingress_entry: "admin"
+#ingress_category: "config"
+#ingress_domain: "connect_smart_v1"
