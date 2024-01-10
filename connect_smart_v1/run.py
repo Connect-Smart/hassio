@@ -174,11 +174,11 @@ def run_scheduled_job():
 if __name__ == '__main__':
     
 
-    # app.run(debug=True)
+    app.run(debug=True)
     # Start de Flask-app in een aparte thread
-    import threading
-    flask_thread = threading.Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 8080, 'debug': True})
-    flask_thread.start()
+    #import threading
+    #flask_thread = threading.Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 8080, 'debug': True})
+    #flask_thread.start()
 
     # Start de geplande job in de hoofdthread
     run_scheduled_job()
