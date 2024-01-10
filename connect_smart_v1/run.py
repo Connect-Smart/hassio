@@ -130,7 +130,7 @@ def run_scheduled_job():
         schedule.run_pending()
         time.sleep(1)
 
-@assist.('toggle-switch')
+@assist.action('toggle-switch')
 def toggle(switch):
     speech = 'Toggling switch for {}'.format(switch)
     hass.switch(switch)
