@@ -3,5 +3,4 @@ requests
 schedule
 asyncio
 pyyaml
-Flask-SQLAlchemy
-Flask-Migrate
+Flask-WTF
