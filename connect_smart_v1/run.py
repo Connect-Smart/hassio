@@ -6,7 +6,6 @@ import schedule
 import time
 
 app = Flask(__name__)
-assist = Assistant(app)
 
 # Gebruik het interne token verkregen door de supervisor
 HASS_TOKEN = os.getenv("SUPERVISOR_TOKEN")
