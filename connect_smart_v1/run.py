@@ -106,7 +106,7 @@ def update_entity(entity_id, state):
 
 @app.route('/', methods=['GET'])
 def index():
-        logging.info(f'Page /')
+    logging.info(f'Page /')
     form = SettingsForm()
     return render_template('index.html', form=form)
 
