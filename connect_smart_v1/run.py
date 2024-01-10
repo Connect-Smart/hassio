@@ -6,7 +6,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 import schedule 
 import time
+import logging
 
+    
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 
@@ -104,13 +106,13 @@ def update_entity(entity_id, state):
 
 @app.route('/', methods=['GET'])
 def index():
-    print(f'Page /')
+        logging.info(f'Page /')
     form = SettingsForm()
     return render_template('index.html', form=form)
 
 @app.route('/save_settings', methods=['POST'])
 def save_settings():
-    print(f'Page /save_settings')
+    logging.info(f'Page /save_settings')
     entity_id = request.form['entity_id']
     input_field = request.form['input_field']
 
@@ -141,18 +143,18 @@ def toggle_switch_route():
     # Implement your logic here to toggle the switch
     # You may need to interact with Home Assistant or another platform to perform the actual switch toggling
     # For now, let's print a message as a placeholder
-    print(f'Toggling switch: {switch_name}')
+    logging.info(f'Toggling switch: {switch_name}')
 
     return "Switch toggled successfully."
 
 @app.route('/admin', methods=['GET'])
 def admin_panel():
-    print(f'Page /admin')
+    logging.info(f'Page /admin')
     return render_template('toggle_switch.html')
 
 @app.route('/energy_data', methods=['GET'])
 def get_energy_data():
-    print(f'Page /get_energy_data')
+    logging.info(f'Page /get_energy_data')
 
     energy_data = fetch_energy_data()
 
@@ -170,7 +172,7 @@ def get_energy_data():
 schedule.every().day.at(SCHEDULE).do(get_energy_data)
 
 def run_scheduled_job():
-    print("Executing Schedule")
+    logging.info("Executing Schedule")
     while True:
         schedule.run_pending()
         time.sleep(1)
