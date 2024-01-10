@@ -32,7 +32,7 @@ ports:
 ingress: true
 ingress_port: 8080
 ingress_panel: true
-ingress_url: "/connect_smart_v1"
+ingress_url: "/connect_smart_v1/admin"
 ingress_category: addon
 #ingress_entry: "admin"
 #ingress_category: "config"
