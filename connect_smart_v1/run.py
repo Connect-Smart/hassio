@@ -1,13 +1,11 @@
 import os
 import requests
 from flask import Flask, jsonify, render_template
-from flask_assistant import Assistant, tell
 from datetime import datetime, timedelta
 import schedule
 import time
 
 app = Flask(__name__)
-assist = Assistant(app)
 
 # Gebruik het interne token verkregen door de supervisor
 HASS_TOKEN = os.getenv("SUPERVISOR_TOKEN")
