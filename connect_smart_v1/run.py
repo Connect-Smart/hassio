@@ -3,6 +3,7 @@ import requests
 from flask import Flask, jsonify
 from datetime import datetime, timedelta
 import schedule
+import time
 
 app = Flask(__name__)
 
@@ -99,6 +100,14 @@ def get_energy_data():
         return "Data and automations updated successfully.", 200
     else:
         return "Failed to fetch energy data.", 500
+
+schedule.every().day.at(SCHEDULE).do(get_energy_data)
+
+def run_scheduled_job():
+    print("Executing Schedule")
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 
 if __name__ == '__main__':
