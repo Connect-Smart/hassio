@@ -212,7 +212,7 @@ def run_scheduled_job():
         time.sleep(1)
 
 if __name__ == '__main__':
-    db.create_all()
+    # db.create_all()
 
     # app.run(debug=True)
     # Start de Flask-app in een aparte thread
