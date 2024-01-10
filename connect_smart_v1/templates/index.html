@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Assistant Settings</title>
+</head>
+<body>
+    <h1>Home Assistant Settings</h1>
+    <form method="POST" action="{{ url_for('save_settings') }}">
+        {{ form.hidden_tag() }}
+        {{ form.entity_id.label }} {{ form.entity_id }}
+        {{ form.input_field.label }} {{ form.input_field }}
+        {{ form.submit }}
+    </form>
+</body>
+</html>
