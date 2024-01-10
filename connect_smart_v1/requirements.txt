@@ -4,3 +4,4 @@ schedule
 asyncio
 pyyaml
 Flask-SQLAlchemy
+Flask-Migrate
