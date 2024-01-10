@@ -110,7 +110,7 @@ def index():
     form = SettingsForm()
     return render_template('index.html', form=form)
 
-@app.route('/save_settings', methods=['POST'])
+@app.route('/', methods=['POST'])
 def save_settings():
     logging.info(f'Page /save_settings')
     entity_id = request.form['entity_id']
