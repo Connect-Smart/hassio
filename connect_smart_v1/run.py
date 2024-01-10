@@ -8,7 +8,26 @@ import schedule
 import time
 
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+    db = SQLAlchemy(app)
+    migrate = Migrate(app, db)
+
+    with app.app_context():
+        ensure_db_exists(db)
+        db.create_all()
+
+    return app, db
+
+def ensure_db_exists(db):
+    # Check if the database file exists, and if not, create it
+    if not os.path.exists(db.engine.url.database):
+        db.create_all()
+
+app, db = create_app()
+
+# app = Flask(__name__)
 #app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # SQLite database
 #db = SQLAlchemy(app)
