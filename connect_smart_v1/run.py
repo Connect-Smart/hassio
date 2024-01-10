@@ -9,6 +9,7 @@ import time
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # SQLite database
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 # Gebruik het interne token verkregen door de supervisor
 HASS_TOKEN = os.getenv("SUPERVISOR_TOKEN")
@@ -211,8 +212,12 @@ def run_scheduled_job():
         schedule.run_pending()
         time.sleep(1)
 
+def create_db():
+    db.create_all()
+
 if __name__ == '__main__':
     # db.create_all()
+    create_db()
 
     # app.run(debug=True)
     # Start de Flask-app in een aparte thread
