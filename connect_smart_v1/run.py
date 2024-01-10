@@ -184,7 +184,7 @@ def toggle_switch_route():
 
     return "Switch toggled successfully."
 
-@app.route('/admin_panel', methods=['GET'])
+@app.route('/admin', methods=['GET'])
 def admin_panel():
     return render_template('toggle_switch.html')
 
