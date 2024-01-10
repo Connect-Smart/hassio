@@ -3,7 +3,8 @@ import requests
 from flask import Flask, jsonify, render_template, request, redirect, url_for
 from datetime import datetime, timedelta
 from flask_sqlalchemy import SQLAlchemy
-import schedule
+from flask_migrate import Migrate
+import schedule 
 import time
 
 app = Flask(__name__)
