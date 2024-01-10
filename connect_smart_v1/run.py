@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 import schedule 
 import time
 
-
+db = SQLAlchemy(app)
 def create_app():
     app = Flask(__name__)
     with app.app_context():
