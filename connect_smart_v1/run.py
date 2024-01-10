@@ -1,6 +1,7 @@
 import os
 import requests
 from flask import Flask, jsonify, render_template
+from flask.globals import _app_ctx_stack as app_ctx_stack
 from flask_assistant import Assistant, tell
 from datetime import datetime, timedelta
 import schedule
