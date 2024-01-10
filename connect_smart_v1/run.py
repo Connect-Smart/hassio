@@ -8,20 +8,7 @@ import schedule
 import time
 
 
-def create_app():
-    app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-    db = SQLAlchemy(app)
-    migrate = Migrate(app, db)
-
-    with app.app_context():
-        init_db()
-        db.create_all()
-
-    return app, db
-
-app, db = create_app()
-
+app = Flask(__name__)
 #app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # SQLite database
 #db = SQLAlchemy(app)
@@ -44,11 +31,6 @@ headers = {
     "Authorization": f"Bearer {HASS_TOKEN}",
     "Content-Type": "application/json",
 }
-
-class InputField(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    value = db.Column(db.String(255), nullable=True)
 
 
 def fetch_energy_data():
@@ -93,8 +75,6 @@ def index():
     if request.method == 'POST':
         field_name = request.form.get('name')
         new_field = InputField(name=field_name)
-        db.session.add(new_field)
-        db.session.commit()
         return redirect(url_for('index'))
 
     fields = InputField.query.all()
@@ -105,65 +85,6 @@ def control_home_assistant_entity(entity_id, state):
     update_entity(entity_id, state)
     return redirect(url_for('index'))
 
-
-
-
-
-
-
-# Gebruik het interne token verkregen door de supervisor
-HASS_TOKEN = os.getenv("SUPERVISOR_TOKEN")
-HASS_API = "http://supervisor/core/api"
-
-AUTOMATION_CHEAPEST = "CS_cheapest_energy_automation"
-AUTOMATION_EXPENSIVE = "CS_most_expensive_energy_automation"
-
-SCHEDULE = "08:01"
-
-API_USERNAME = os.getenv("username")
-API_PASSWORD = os.getenv("password")
-API_URL = "https://voxip.nl/api"
-
-headers = {
-    "Authorization": f"Bearer {HASS_TOKEN}",
-    "Content-Type": "application/json",
-}
-
-def fetch_energy_data():
-    login_data = {"username": API_USERNAME, "password": API_PASSWORD}
-    website_data_url = "https://voxip.nl/api"
-    response = requests.get(website_data_url, data=login_data)
-
-    if response.ok:
-        return response.json()
-    else:
-        return None
-
-def extract_times(energy_data):
-    cheapest_time = energy_data.get("cheapest_time")
-    most_expensive_time = energy_data.get("most_expensive_time")
-
-    return cheapest_time, most_expensive_time
-
-def save_times_to_home_assistant(cheapest_time, most_expensive_time):
-    cheapest_entity_id = "sensor.cheapest_energy_time"
-    expensive_entity_id = "sensor.expensive_energy_time"
-
-    # Format times as HH:MM
-    cheapest_time_str = datetime.strptime(cheapest_time, "%Y-%m-%d %H:%M:%S").strftime("%H:%M")
-    most_expensive_time_str = datetime.strptime(most_expensive_time, "%Y-%m-%d %H:%M:%S").strftime("%H:%M")
-
-    # Update entities in Home Assistant
-    update_entity(cheapest_entity_id, cheapest_time_str)
-    update_entity(expensive_entity_id, most_expensive_time_str)
-
-    return cheapest_time_str, most_expensive_time_str
-
-def update_entity(entity_id, state):
-    url = f"{HASS_API}/states/{entity_id}"
-    data = {"state": state}
-    response = requests.post(url, headers=headers, json=data)
-    return response.ok
 
 def create_automation(trigger_time, automation_name, automation_entity_id):
     # Create automation in Home Assistant
@@ -228,12 +149,9 @@ def run_scheduled_job():
         schedule.run_pending()
         time.sleep(1)
 
-def create_db():
-    db.create_all()
 
 if __name__ == '__main__':
-    # db.create_all()
-    create_db()
+    
 
     # app.run(debug=True)
     # Start de Flask-app in een aparte thread
