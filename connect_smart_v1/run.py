@@ -176,14 +176,22 @@ def run_scheduled_job():
         time.sleep(1)
 
 
+
 if __name__ == '__main__':
-    
+    app.run(host='0.0.0.0', port=8080, debug=True)
+
+    # Start de geplande job in de hoofdthread
+    schedule.every().day.at(SCHEDULE).do(get_energy_data)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)    
 
     # app.run()
     # Start de Flask-app in een aparte thread
-    import threading
-    flask_thread = threading.Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 8080, 'debug': True})
-    flask_thread.start()
+    # import threading
+    # flask_thread = threading.Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 8080, 'debug': True})
+    # flask_thread.start()
 
     # Start de geplande job in de hoofdthread
-    run_scheduled_job()
+    # run_scheduled_job()
