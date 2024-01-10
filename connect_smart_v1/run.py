@@ -15,7 +15,7 @@ def create_app():
     migrate = Migrate(app, db)
 
     with app.app_context():
-        init_db(()
+        init_db()
         db.create_all()
 
     return app, db
