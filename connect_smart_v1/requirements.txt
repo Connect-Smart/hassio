@@ -3,3 +3,4 @@ requests
 schedule
 asyncio
 pyyaml
+Flask-SQLAlchemy
