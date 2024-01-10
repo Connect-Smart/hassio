@@ -1,6 +1,6 @@
 import os
 import requests
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from datetime import datetime, timedelta
 import schedule
 import time
@@ -86,7 +86,12 @@ def create_automation(trigger_time, automation_name, automation_entity_id):
 
     return response.ok
 
-@app.route('/admin', methods=['GET'])
+@app.route('/admin')
+def admin_panel():
+    return render_template('admin_panel.html')  # Maak een HTML-sjabloon voor je admin-paneel
+
+
+@app.route('/energy_data', methods=['GET'])
 def get_energy_data():
     energy_data = fetch_energy_data()
 
