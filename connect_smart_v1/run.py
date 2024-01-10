@@ -51,6 +51,31 @@ headers = {
     "Content-Type": "application/json",
 }
 
+def create_automation(trigger_time, automation_name, automation_entity_id):
+    # Create automation in Home Assistant
+    automation_data = {
+        "name": automation_name,
+        "trigger": [
+            {
+                "platform": "time",
+                "at": trigger_time
+            }
+        ],
+        "action": [
+            {
+                "service": "light.toggle",  # Replace with the actual service for your device
+                "target": {
+                    "entity_id": "light.testaktor_dimaktor"
+                }
+            }
+        ]
+    }
+
+    url = f"{HASS_API}/config/automation/create"
+    response = requests.post(url, headers=headers, json=automation_data)
+
+    return response.ok
+
 
 def fetch_energy_data():
     login_data = {"username": API_USERNAME, "password": API_PASSWORD}
@@ -88,12 +113,23 @@ def update_entity(entity_id, state):
     response = requests.post(url, headers=headers, json=data)
     return response.ok
 
+class InputField(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    value = db.Column(db.String(255), nullable=True)
+
+@app.route('/')
+def index():
+    fields = InputField.query.all()
+    return render_template('index.html', fields=fields)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         field_name = request.form.get('name')
         new_field = InputField(name=field_name)
+        db.session.add(new_field)
+        db.session.commit()
         return redirect(url_for('index'))
 
     fields = InputField.query.all()
@@ -104,31 +140,6 @@ def control_home_assistant_entity(entity_id, state):
     update_entity(entity_id, state)
     return redirect(url_for('index'))
 
-
-def create_automation(trigger_time, automation_name, automation_entity_id):
-    # Create automation in Home Assistant
-    automation_data = {
-        "name": automation_name,
-        "trigger": [
-            {
-                "platform": "time",
-                "at": trigger_time
-            }
-        ],
-        "action": [
-            {
-                "service": "light.toggle",  # Replace with the actual service for your device
-                "target": {
-                    "entity_id": "light.testaktor_dimaktor"
-                }
-            }
-        ]
-    }
-
-    url = f"{HASS_API}/config/automation/create"
-    response = requests.post(url, headers=headers, json=automation_data)
-
-    return response.ok
 
 @app.route('/toggle_switch', methods=['POST'])
 def toggle_switch_route():
