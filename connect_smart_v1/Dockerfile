@@ -14,7 +14,7 @@ COPY requirements.txt /requirements.txt
 RUN pip install --no-cache-dir -r /requirements.txt
 
 # Kopieer root filesystem
-COPY templates /
+COPY templates /templates/
 
 # Kopieer het Python script
 COPY run.py /run.py
