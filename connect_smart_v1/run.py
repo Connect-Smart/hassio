@@ -11,8 +11,8 @@ app = Flask(__name__)
 HASS_TOKEN = os.getenv("SUPERVISOR_TOKEN")
 HASS_API = "http://supervisor/core/api"
 
-AUTOMATION_CHEAPEST = os.getenv("cheapest_energy_automation")
-AUTOMATION_EXPENSIVE = os.getenv("most_expensive_energy_automation")
+AUTOMATION_CHEAPEST = "CS_cheapest_energy_automation"
+AUTOMATION_EXPENSIVE = "CS_most_expensive_energy_automation"
 
 SCHEDULE = "08:01"
 
