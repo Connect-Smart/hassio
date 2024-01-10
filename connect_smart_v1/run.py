@@ -11,9 +11,14 @@ def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
     db = SQLAlchemy(app)
+    migrate = Migrate(app, db)
+
     with app.app_context():
-        init_db()
-    return app
+        db.create_all()
+
+    return app, db
+
+app, db = create_app()
 
 #app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # SQLite database
