@@ -24,7 +24,9 @@ def ensure_db_exists(db):
     # Check if the database file exists, and if not, create it
     if not os.path.exists(db.engine.url.database):
         db.create_all()
-
+        # Explicitly create the table
+        InputField.__table__.create(bind=db.engine)
+        
 app, db = create_app()
 
 # app = Flask(__name__)
