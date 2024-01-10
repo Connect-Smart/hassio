@@ -1,5 +1,5 @@
 Flask==1.1.2
-flask-assistant==0.6.0
+flask-assistant
 requests
 schedule
 asyncio
