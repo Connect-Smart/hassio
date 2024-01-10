@@ -1,11 +1,13 @@
 import os
 import requests
 from flask import Flask, jsonify, render_template
+from flask_assistant import Assistant, tell
 from datetime import datetime, timedelta
 import schedule
 import time
 
 app = Flask(__name__)
+assist = Assistant(app)
 
 # Gebruik het interne token verkregen door de supervisor
 HASS_TOKEN = os.getenv("SUPERVISOR_TOKEN")
@@ -113,6 +115,18 @@ def run_scheduled_job():
     while True:
         schedule.run_pending()
         time.sleep(1)
+
+@assist.('toggle-switch')
+def toggle(switch):
+    speech = 'Toggling switch for {}'.format(switch)
+    hass.switch(switch)
+    return tell(speech)
+
+@assist.action('switch-on')
+def switch_on(switch):
+    speech = 'Flipping on {} switch'.format(switch)
+    hass.switch(switch, service='turn_on')
+    return tell(speech)
 
 
 if __name__ == '__main__':
