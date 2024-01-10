@@ -118,11 +118,6 @@ class InputField(db.Model):
     name = db.Column(db.String(255), nullable=False)
     value = db.Column(db.String(255), nullable=True)
 
-@app.route('/')
-def index():
-    fields = InputField.query.all()
-    return render_template('index.html', fields=fields)
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
