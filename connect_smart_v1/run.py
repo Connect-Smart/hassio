@@ -2,34 +2,14 @@ import os
 import requests
 from flask import Flask, jsonify, render_template, request, redirect, url_for
 from datetime import datetime, timedelta
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
 import schedule 
 import time
 
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key'
 
-def create_app():
-    app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-    db = SQLAlchemy(app)
-    migrate = Migrate(app, db)
-
-    with app.app_context():
-        ensure_db_exists(db)
-        db.create_all()
-
-    return app, db
-
-def ensure_db_exists(db):
-    # Check if the database file exists, and if not, create it
-    if not os.path.exists(db.engine.url.database):
-        db.create_all()
-        # Explicitly create the table
-        InputField.__table__.create(bind=db.engine)
-        
-app, db = create_app()
-
-# app = Flask(__name__)
 #app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # SQLite database
 #db = SQLAlchemy(app)
@@ -52,6 +32,12 @@ headers = {
     "Authorization": f"Bearer {HASS_TOKEN}",
     "Content-Type": "application/json",
 }
+
+class SettingsForm(FlaskForm):
+    entity_id = StringField('Entity ID')
+    input_field = StringField('Input Field')
+    submit = SubmitField('Save Settings')
+
 
 def create_automation(trigger_time, automation_name, automation_entity_id):
     # Create automation in Home Assistant
@@ -115,22 +101,30 @@ def update_entity(entity_id, state):
     response = requests.post(url, headers=headers, json=data)
     return response.ok
 
-class InputField(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    value = db.Column(db.String(255), nullable=True)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
-    if request.method == 'POST':
-        field_name = request.form.get('name')
-        new_field = InputField(name=field_name)
-        db.session.add(new_field)
-        db.session.commit()
-        return redirect(url_for('index'))
+    form = SettingsForm()
+    return render_template('index.html', form=form)
 
-    fields = InputField.query.all()
-    return render_template('index.html', fields=fields)
+@app.route('/save_settings', methods=['POST'])
+def save_settings():
+    entity_id = request.form['entity_id']
+    input_field = request.form['input_field']
+
+    # Save settings to Home Assistant (implement your logic)
+
+    return f'Settings saved: Entity ID - {entity_id}, Input Field - {input_field}'
+
+@app.route('/control_entity', methods=['POST'])
+def control_entity():
+    entity_id = request.form['entity_id']
+
+    update_entity(entity_id, 'On')
+    return f'Entity controlled: {entity_id}'
+
+
+
 
 @app.route('/update_entity/<entity_id>/<state>')
 def control_home_assistant_entity(entity_id, state):
@@ -183,7 +177,7 @@ if __name__ == '__main__':
     # app.run(debug=True)
     # Start de Flask-app in een aparte thread
     import threading
-    flask_thread = threading.Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 8080})
+    flask_thread = threading.Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 8080, 'debug': True})
     flask_thread.start()
 
     # Start de geplande job in de hoofdthread
