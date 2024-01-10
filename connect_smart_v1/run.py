@@ -102,13 +102,15 @@ def update_entity(entity_id, state):
     return response.ok
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
+    print(f'Page /')
     form = SettingsForm()
     return render_template('index.html', form=form)
 
 @app.route('/save_settings', methods=['POST'])
 def save_settings():
+    print(f'Page /save_settings')
     entity_id = request.form['entity_id']
     input_field = request.form['input_field']
 
@@ -145,6 +147,7 @@ def toggle_switch_route():
 
 @app.route('/admin', methods=['GET'])
 def admin_panel():
+    print(f'Page /admin')
     return render_template('toggle_switch.html')
 
 @app.route('/energy_data', methods=['GET'])
