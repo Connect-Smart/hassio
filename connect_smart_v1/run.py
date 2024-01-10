@@ -97,11 +97,8 @@ def toggle_switch_route():
 
     return "Switch toggled successfully."
 
-@app.route('/admin')
-def admin_panel():
-    return render_template('admin_panel.html')  # Maak een HTML-sjabloon voor je admin-paneel
-
 @app.route('/admin_panel', methods=['GET'])
+def admin_panel():
     return render_template('toggle_switch.html')
 
 @app.route('/energy_data', methods=['GET'])
