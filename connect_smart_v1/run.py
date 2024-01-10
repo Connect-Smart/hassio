@@ -1,7 +1,7 @@
 import os
 import requests
 from flask import Flask, jsonify, render_template
-from flask-assistant import Assistant, tell
+from flask_assistant import Assistant, tell
 from datetime import datetime, timedelta
 import schedule
 import time
