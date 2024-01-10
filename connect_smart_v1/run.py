@@ -88,6 +88,17 @@ def create_automation(trigger_time, automation_name, automation_entity_id):
 
     return response.ok
 
+@app.route('/toggle_switch', methods=['POST'])
+def toggle_switch_route():
+    switch_name = request.form.get('switch_name')
+    
+    # Implement your logic here to toggle the switch
+    # You may need to interact with Home Assistant or another platform to perform the actual switch toggling
+    # For now, let's print a message as a placeholder
+    print(f'Toggling switch: {switch_name}')
+
+    return "Switch toggled successfully."
+
 @app.route('/admin')
 def admin_panel():
     return render_template('admin_panel.html')  # Maak een HTML-sjabloon voor je admin-paneel
