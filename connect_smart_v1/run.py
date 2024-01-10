@@ -7,10 +7,17 @@ from flask_migrate import Migrate
 import schedule 
 import time
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # SQLite database
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+
+def create_app():
+    app = Flask(__name__)
+    with app.app_context():
+        init_db()
+    return app
+
+#app = Flask(__name__)
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # SQLite database
+#db = SQLAlchemy(app)
+#migrate = Migrate(app, db)
 
 # Gebruik het interne token verkregen door de supervisor
 HASS_TOKEN = os.getenv("SUPERVISOR_TOKEN")
