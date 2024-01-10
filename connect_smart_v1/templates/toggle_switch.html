@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch Toggle Panel</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <h1>Switch Toggle Panel</h1>
+
+    <button id="toggleButton" data-switch-name="your_switch_name">Toggle Switch</button>
+
+    <script>
+        // JavaScript to handle button click and toggle the switch
+        $(document).ready(function() {
+            $('#toggleButton').click(function() {
+                var switchName = $(this).data('switch-name');
+                $.post('/toggle_switch', { switch_name: switchName }, function(data) {
+                    // Handle the response if needed
+                    console.log(data);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
