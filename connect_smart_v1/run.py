@@ -103,22 +103,22 @@ def update_entity(entity_id, state):
     response = requests.post(url, headers=headers, json=data)
     return response.ok
 
-
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     logging.info(f'Page /')
     form = SettingsForm()
+
+    if request.method == 'POST':
+        entity_id = request.form['entity_id']
+        input_field = request.form['input_field']
+
+        # Save settings to Home Assistant (implement your logic)
+
+        return f'Settings saved: Entity ID - {entity_id}, Input Field - {input_field}'
+
     return render_template('index.html', form=form)
 
-@app.route('/', methods=['POST'])
-def save_settings():
-    logging.info(f'Page /save_settings')
-    entity_id = request.form['entity_id']
-    input_field = request.form['input_field']
 
-    # Save settings to Home Assistant (implement your logic)
-
-    return f'Settings saved: Entity ID - {entity_id}, Input Field - {input_field}'
 
 @app.route('/control_entity', methods=['POST'])
 def control_entity():
