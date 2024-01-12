@@ -24,7 +24,7 @@ HASS_API = "http://supervisor/core/api"
 AUTOMATION_CHEAPEST = "CS_cheapest_energy_automation"
 AUTOMATION_EXPENSIVE = "CS_most_expensive_energy_automation"
 
-SCHEDULE = "08:01"
+SCHEDULE = "20:45"
 
 API_USERNAME = os.getenv("username")
 API_PASSWORD = os.getenv("password")
