@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Home Assistant Settings</h1>
-    <form method="POST" action="{{ url_for('save_settings') }}">
+    <form method="POST" action="{{ url_for('index') }}">
         {{ form.hidden_tag() }}
         {{ form.entity_id.label }} {{ form.entity_id }}
         {{ form.input_field.label }} {{ form.input_field }}
