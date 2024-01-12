@@ -113,6 +113,7 @@ def index():
         input_field = request.form['input_field']
 
         # Save settings to Home Assistant (implement your logic)
+        update_entity(entity_id, input_field)
 
         return f'Settings saved: Entity ID - {entity_id}, Input Field - {input_field}'
 
