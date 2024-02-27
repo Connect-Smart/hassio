@@ -108,7 +108,7 @@ def index():
     logging.info(f'Page /')
     form = SettingsForm()
 
-    return f'Settings saved: Entity ID -{request.method}, {request.path}, {request.args}, {request.form}'
+    return f'Settings saved: Entity ID -{request.json}, {request.path}, {request.__dict__}'
     
     if request.method == 'POST':
         entity_id = request.form['entity_id']
