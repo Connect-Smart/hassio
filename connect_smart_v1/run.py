@@ -102,19 +102,13 @@ def update_entity(entity_id, state):
     data = {"state": state}
     response = requests.post(url, headers=headers, json=data)
     return response.ok
-
-@app.route('/about')
-def about():
-    return 'Dit is de "Over ons" pagina.'
-
-@app.route('/contact')
-def contact():
-    return 'Dit is de contactpagina.'
     
 @app.route('/', methods=['GET', 'POST'])
 def index():
     logging.info(f'Page /')
     form = SettingsForm()
+
+    print(request.url)
 
     if request.method == 'POST':
         entity_id = request.form['entity_id']
