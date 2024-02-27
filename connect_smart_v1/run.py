@@ -105,7 +105,7 @@ def update_entity(entity_id, state):
 
 @app.route('/setup', methods=['GET', 'POST'])
 def index():
-    logging.info(f'Page /setup')
+    logging.info(f'Page /')
     form = SettingsForm()
 
     if request.method == 'POST':
@@ -121,7 +121,7 @@ def index():
 
 
 
-@app.route('/setup/control_entity', methods=['POST'])
+@app.route('/control_entity', methods=['POST'])
 def control_entity():
     entity_id = request.form['entity_id']
 
@@ -153,7 +153,7 @@ def admin_panel():
     logging.info(f'Page /admin')
     return render_template('toggle_switch.html')
 
-@app.route('/setup/energy_data', methods=['GET'])
+@app.route('/energy_data', methods=['GET'])
 def get_energy_data():
     logging.info(f'Page /get_energy_data')
 
