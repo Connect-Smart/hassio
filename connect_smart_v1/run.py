@@ -108,12 +108,6 @@ def index():
     logging.info(f'Page /')
     form = SettingsForm()
 
-    if 'X-Ingress-Path' in request.headers:
-        ingress_path = request.headers['X-Ingress-Path']
-        return f'X-Ingress-Path: {ingress_path}'
-    else:
-        return f'X-Ingress-Path header not found'
-        
     if request.method == 'POST':
         entity_id = request.form['entity_id']
         input_field = request.form['input_field']
