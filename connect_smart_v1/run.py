@@ -108,7 +108,11 @@ def index():
     logging.info(f'Page /')
     form = SettingsForm()
 
-    return f'Settings saved: Entity ID -{request.json}, {request.path}, {request.__dict__}'
+    if 'X-Ingress-Path' in request.headers:
+        ingress_path = request.headers['X-Ingress-Path']
+        print("X-Ingress-Path:", ingress_path)
+    else:
+        print("X-Ingress-Path header not found")
     
     if request.method == 'POST':
         entity_id = request.form['entity_id']
