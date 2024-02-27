@@ -33,8 +33,9 @@ panel_admin: true
 panel_title: Cura
 ingress: true
 ingress_port: 8080
-#ingress_panel: true
-#ingress_url: "/connect_smart_v1"
-#ingress_category: addon
-#ingress_entry: "admin"
-#ingress_domain: "connect_smart_v1"
+ingress_panel: true
+ingress_url: "/connect_smart_v1"
+ingress_category: addon
+ingress_entry: "admin"
+ingress_entry: "power"
+ingress_domain: "connect_smart_v1"
