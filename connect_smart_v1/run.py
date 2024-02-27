@@ -109,7 +109,7 @@ def index():
     form = SettingsForm()
 
     return f'{request.method}'
-    return f'(request.path}'
+    return f'{request.path}'
     return f'{request.headers}'
     return f'{request.args}'
     return f'{request.form}'
