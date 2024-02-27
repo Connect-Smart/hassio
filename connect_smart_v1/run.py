@@ -103,7 +103,7 @@ def update_entity(entity_id, state):
     response = requests.post(url, headers=headers, json=data)
     return response.ok
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/setup', methods=['GET', 'POST'])
 def index():
     logging.info(f'Page /')
     form = SettingsForm()
