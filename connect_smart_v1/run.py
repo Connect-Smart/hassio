@@ -103,7 +103,7 @@ def update_entity(entity_id, state):
     response = requests.post(url, headers=headers, json=data)
     return response.ok
 
-@app.route('/setup', methods=['GET', 'POST'])
+@app.route('/admin/setup', methods=['GET', 'POST'])
 def index():
     logging.info(f'Page /')
     form = SettingsForm()
@@ -121,7 +121,7 @@ def index():
 
 
 
-@app.route('/control_entity', methods=['POST'])
+@app.route('/admin/control_entity', methods=['POST'])
 def control_entity():
     entity_id = request.form['entity_id']
 
@@ -131,13 +131,13 @@ def control_entity():
 
 
 
-@app.route('/update_entity/<entity_id>/<state>')
+@app.route('/admin/update_entity/<entity_id>/<state>')
 def control_home_assistant_entity(entity_id, state):
     update_entity(entity_id, state)
     return redirect(url_for('index'))
 
 
-@app.route('/toggle_switch', methods=['POST'])
+@app.route('/admin/toggle_switch', methods=['POST'])
 def toggle_switch_route():
     switch_name = request.form.get('switch_name')
     
@@ -153,7 +153,7 @@ def admin_panel():
     logging.info(f'Page /admin')
     return render_template('toggle_switch.html')
 
-@app.route('/energy_data', methods=['GET'])
+@app.route('/admin/energy_data', methods=['GET'])
 def get_energy_data():
     logging.info(f'Page /get_energy_data')
 
