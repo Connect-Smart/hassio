@@ -110,10 +110,10 @@ def index():
 
     if 'X-Ingress-Path' in request.headers:
         ingress_path = request.headers['X-Ingress-Path']
-        print("X-Ingress-Path:", ingress_path)
+        return f'X-Ingress-Path: {ingress_path}'
     else:
-        print("X-Ingress-Path header not found")
-    
+        return f'X-Ingress-Path header not found'
+        
     if request.method == 'POST':
         entity_id = request.form['entity_id']
         input_field = request.form['input_field']
