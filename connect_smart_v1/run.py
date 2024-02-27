@@ -108,7 +108,7 @@ def index():
     logging.info(f'Page /')
     form = SettingsForm()
 
-    print(request.url)
+    logging.info(request.url)
 
     if request.method == 'POST':
         entity_id = request.form['entity_id']
