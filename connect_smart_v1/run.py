@@ -119,10 +119,6 @@ def index():
         create_automation(cheapest_trigger, "Cheapest Energy Automation", AUTOMATION_CHEAPEST)
         create_automation(expensive_trigger, "Most Expensive Energy Automation", AUTOMATION_EXPENSIVE)
 
-        return "Data and automations updated successfully.", 200
-    else:
-        return "Failed to fetch energy data.", 500
-
     if request.method == 'POST':
         entity_id = request.form['entity_id']
         input_field = request.form['input_field']
