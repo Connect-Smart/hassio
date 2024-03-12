@@ -1,6 +1,6 @@
 import os
 import requests
-from flask import Flask, jsonify, render_template, request, redirect, url_for
+from flask import Flask, Blueprint, jsonify, render_template, request, redirect, url_for
 from datetime import datetime, timedelta
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
