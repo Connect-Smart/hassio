@@ -108,7 +108,8 @@ def index():
     logging.info(f'Page /')
     form = SettingsForm()
     energy_data = fetch_energy_data()
-
+    schedule.every().day.at(SCHEDULE).do(get_energy_data)
+    
     if energy_data:
         cheapest_time, most_expensive_time = extract_times(energy_data)
         cheapest_trigger, expensive_trigger = save_times_to_home_assistant(cheapest_time, most_expensive_time)
@@ -119,8 +120,6 @@ def index():
         return "Data and automations updated successfully.", 200
     else:
         return "Failed to fetch energy data.", 500
-
-schedule.every().day.at(SCHEDULE).do(get_energy_data)
 
     if request.method == 'POST':
         entity_id = request.form['entity_id']
