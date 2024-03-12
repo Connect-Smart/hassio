@@ -112,7 +112,9 @@ def index():
     
     if energy_data:
         cheapest_time, most_expensive_time = extract_times(energy_data)
+        logging.info(f'cheapest_time')
         cheapest_trigger, expensive_trigger = save_times_to_home_assistant(cheapest_time, most_expensive_time)
+        logging.info(f'cheapest_trigger')
 
         create_automation(cheapest_trigger, "Cheapest Energy Automation", AUTOMATION_CHEAPEST)
         create_automation(expensive_trigger, "Most Expensive Energy Automation", AUTOMATION_EXPENSIVE)
