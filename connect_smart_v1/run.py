@@ -8,14 +8,21 @@ import schedule
 import time
 import logging
 
-    
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 
-#app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # SQLite database
-#db = SQLAlchemy(app)
-#migrate = Migrate(app, db)
+# Define your URLs and corresponding Blueprints
+urls_blueprints = {
+    '/': 'main',
+    '/admin': 'admin',
+    '/energy_data': 'energy_data'
+}
+
+# Registering Blueprints
+for url, blueprint_name in urls_blueprints.items():
+    blueprint = Blueprint(blueprint_name, __name__, url_prefix=url)
+    app.register_blueprint(blueprint)
+
 
 # Gebruik het interne token verkregen door de supervisor
 HASS_TOKEN = os.getenv("SUPERVISOR_TOKEN")
