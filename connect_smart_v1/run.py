@@ -20,9 +20,8 @@ urls_blueprints = {
 
 # Registering Blueprints
 for url, blueprint_name in urls_blueprints.items():
-    blueprint = Blueprint(blueprint_name, __name__, url_prefix=url)
+    blueprint = Blueprint(blueprint_name, __name__, url_prefix=f'/5ec61418_connect_smart_v1/ingress{url}')
     app.register_blueprint(blueprint)
-
 
 # Gebruik het interne token verkregen door de supervisor
 HASS_TOKEN = os.getenv("SUPERVISOR_TOKEN")
