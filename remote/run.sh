@@ -8,6 +8,8 @@ SSH_PORT=22222
 
 USERNAME=$(jq --raw-output ".username" $CONFIG_PATH)
 SSHUSERNAME=2${USERNAME:1}
+ZABBIX_HTTP_PORT=21${USERNAME:2}
+#ZABBIX_HTTPS_PORT=22${USERNAME:2}
 PRIV_KEY=$(jq --raw-output ".privkey" $CONFIG_PATH)
 
 #
@@ -36,6 +38,8 @@ COMMAND="/usr/bin/autossh "\
 "-i ${KEY_PATH}/autossh_rsa_key "\
 "hassio_${USERNAME}@${HOSTNAME} "\
 "-R 172.17.0.1:${USERNAME}:127.0.0.1:8123 "\
+"-R 172.17.0.1:${ZABBIX_HTTP_PORT}:127.0.0.1:10050 "\
+#"-R 172.17.0.1:${ZABBIX_HTTPS_PORT}:127.0.0.1:10051 "\
 "-R 127.0.0.1:${USERNAME}:127.0.0.1:8123 "\
 "-R ${SSHUSERNAME}:127.0.0.1:22"
 
